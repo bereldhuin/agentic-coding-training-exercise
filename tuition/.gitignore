@@ -1,0 +1,10 @@
+# Verification reports
+report.json
+*.report.json
+
+# PM2 logs
+pm2-*.log
+
+dist/
+
+node_modules/

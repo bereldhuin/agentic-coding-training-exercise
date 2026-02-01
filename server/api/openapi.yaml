@@ -1,0 +1,880 @@
+openapi: 3.1.0
+info:
+  title: LeBonPoint Marketplace API
+  version: 1.0.0
+  description: |
+    REST API for the LeBonPoint marketplace application. This API provides endpoints for managing
+    marketplace items including full-text search, filtering, sorting, and pagination.
+
+    **API-First Development**: This specification is the canonical source of truth for the API.
+    All server implementations (TypeScript, Python, and others) must conform to this specification.
+
+    **Base URLs**:
+    - TypeScript (Express): http://localhost:3000
+    - Python (FastAPI): http://localhost:8000
+  contact:
+    name: LeBonPoint API Team
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:3000
+    description: TypeScript server (Express)
+  - url: http://localhost:8000
+    description: Python server (FastAPI)
+
+tags:
+  - name: Health
+    description: Health check endpoints
+  - name: Items
+    description: Marketplace item management
+
+paths:
+  /health:
+    get:
+      tags:
+        - Health
+      summary: Health check
+      description: Returns the health status of the API server
+      operationId: getHealth
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                status: ok
+                timestamp: '2026-01-31T12:00:00.000Z'
+
+  /v1/items:
+    get:
+      tags:
+        - Items
+      summary: List items
+      description: |
+        Retrieve a paginated list of items with optional filtering, sorting, and full-text search.
+
+        **Query Parameters**:
+        - Filter by status, category, price range, city, postal code, featured flag, delivery availability
+        - Sort by any field using the `sort` parameter (format: `field:direction`)
+        - Paginate using cursor-based pagination with `limit` and `cursor`
+        - Full-text search using the `q` parameter
+      operationId: listItems
+      parameters:
+        - name: status
+          in: query
+          description: Filter by item status
+          schema:
+            type: string
+            enum: [draft, active, reserved, sold, archived]
+          example: active
+        - name: category
+          in: query
+          description: Filter by item category
+          schema:
+            type: string
+          example: electronics
+        - name: min_price_cents
+          in: query
+          description: Minimum price in cents
+          schema:
+            type: integer
+            minimum: 0
+          example: 1000
+        - name: max_price_cents
+          in: query
+          description: Maximum price in cents
+          schema:
+            type: integer
+            minimum: 0
+          example: 50000
+        - name: city
+          in: query
+          description: Filter by city
+          schema:
+            type: string
+          example: Strasbourg
+        - name: postal_code
+          in: query
+          description: Filter by postal code
+          schema:
+            type: string
+          example: '67000'
+        - name: is_featured
+          in: query
+          description: Filter by featured status
+          schema:
+            type: boolean
+          example: true
+        - name: delivery_available
+          in: query
+          description: Filter by delivery availability
+          schema:
+            type: boolean
+          example: true
+        - name: sort
+          in: query
+          description: |
+            Sort by field and direction. Format: `field:direction`
+            Fields: id, title, price_cents, created_at, updated_at, published_at
+            Directions: asc, desc
+          schema:
+            type: string
+            pattern: '^[a-z_]+:(asc|desc)$'
+          example: created_at:desc
+        - name: limit
+          in: query
+          description: Number of items per page (1-100)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          example: 20
+        - name: cursor
+          in: query
+          description: Pagination cursor (base64-encoded JSON)
+          schema:
+            type: string
+            format: byte
+          example: eyJpZCI6MjB9
+        - name: q
+          in: query
+          description: Full-text search query (searches title and description)
+          schema:
+            type: string
+          example: iPhone
+      responses:
+        '200':
+          description: List of items
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListItemsResponse'
+              example:
+                items:
+                  - id: 1
+                    title: 'iPhone 13 Pro - Excellent Condition'
+                    description: 'Selling my iPhone 13 Pro 256GB in excellent condition. Always kept in a case with screen protector.'
+                    price_cents: 65000
+                    category: electronics
+                    condition: like_new
+                    status: active
+                    is_featured: true
+                    city: Strasbourg
+                    postal_code: '67000'
+                    country: FR
+                    delivery_available: true
+                    created_at: '2026-01-31T10:00:00.000Z'
+                    updated_at: '2026-01-31T10:00:00.000Z'
+                    published_at: '2026-01-31T10:00:00.000Z'
+                    images:
+                      - url: 'https://example.com/images/iphone13-1.jpg'
+                        alt: 'iPhone 13 Pro front view'
+                        sort_order: 1
+                      - url: 'https://example.com/images/iphone13-2.jpg'
+                        alt: 'iPhone 13 Pro back view'
+                        sort_order: 2
+                next_cursor: eyJpZCI6MjB9
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: validation_error
+                  message: Validation failed
+                  details:
+                    limit: 'limit must be between 1 and 100'
+
+    post:
+      tags:
+        - Items
+      summary: Create item
+      description: Create a new marketplace item
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateItemRequest'
+            example:
+              title: 'Vintage Leather Sofa'
+              description: 'Beautiful vintage leather sofa from the 1970s. Minor wear consistent with age.'
+              price_cents: 35000
+              category: furniture
+              condition: good
+              status: draft
+              is_featured: false
+              city: Strasbourg
+              postal_code: '67000'
+              country: FR
+              delivery_available: false
+              images:
+                - url: 'https://example.com/images/sofa-1.jpg'
+                  alt: 'Vintage leather sofa front view'
+      responses:
+        '201':
+          description: Item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+              example:
+                id: 21
+                title: 'Vintage Leather Sofa'
+                description: 'Beautiful vintage leather sofa from the 1970s. Minor wear consistent with age.'
+                price_cents: 35000
+                category: furniture
+                condition: good
+                status: draft
+                is_featured: false
+                city: Strasbourg
+                postal_code: '67000'
+                country: FR
+                delivery_available: false
+                created_at: '2026-01-31T12:00:00.000Z'
+                updated_at: '2026-01-31T12:00:00.000Z'
+                published_at: null
+                images:
+                  - url: 'https://example.com/images/sofa-1.jpg'
+                    alt: 'Vintage leather sofa front view'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: validation_error
+                  message: Validation failed
+                  details:
+                    title: 'Title must be at least 3 characters'
+
+  /v1/items/{id}:
+    get:
+      tags:
+        - Items
+      summary: Get item
+      description: Retrieve a single item by ID
+      operationId: getItem
+      parameters:
+        - name: id
+          in: path
+          description: Item ID
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        '200':
+          description: Item found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+              example:
+                id: 1
+                title: 'iPhone 13 Pro - Excellent Condition'
+                description: 'Selling my iPhone 13 Pro 256GB in excellent condition.'
+                price_cents: 65000
+                category: electronics
+                condition: like_new
+                status: active
+                is_featured: true
+                city: Strasbourg
+                postal_code: '67000'
+                country: FR
+                delivery_available: true
+                created_at: '2026-01-31T10:00:00.000Z'
+                updated_at: '2026-01-31T10:00:00.000Z'
+                published_at: '2026-01-31T10:00:00.000Z'
+                images:
+                  - url: 'https://example.com/images/iphone13-1.jpg'
+                    alt: 'iPhone 13 Pro front view'
+                    sort_order: 1
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: not_found
+                  message: Item not found
+                  details: {}
+
+    put:
+      tags:
+        - Items
+      summary: Update item (replace)
+      description: |
+        Replace an entire item. All fields except `id` are required.
+        Use PATCH for partial updates.
+      operationId: updateItem
+      parameters:
+        - name: id
+          in: path
+          description: Item ID
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateItemRequest'
+            example:
+              title: 'iPhone 13 Pro - Like New (Updated)'
+              description: 'Updated description: iPhone 13 Pro 256GB in pristine condition with original box and accessories.'
+              price_cents: 62000
+              category: electronics
+              condition: like_new
+              status: active
+              is_featured: true
+              city: Strasbourg
+              postal_code: '67000'
+              country: FR
+              delivery_available: true
+              images:
+                - url: 'https://example.com/images/iphone13-1.jpg'
+                  alt: 'iPhone 13 Pro front view'
+                  sort_order: 1
+      responses:
+        '200':
+          description: Item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+              example:
+                id: 1
+                title: 'iPhone 13 Pro - Like New (Updated)'
+                description: 'Updated description: iPhone 13 Pro 256GB in pristine condition.'
+                price_cents: 62000
+                category: electronics
+                condition: like_new
+                status: active
+                is_featured: true
+                city: Strasbourg
+                postal_code: '67000'
+                country: FR
+                delivery_available: true
+                created_at: '2026-01-31T10:00:00.000Z'
+                updated_at: '2026-01-31T12:00:00.000Z'
+                published_at: '2026-01-31T10:00:00.000Z'
+                images:
+                  - url: 'https://example.com/images/iphone13-1.jpg'
+                    alt: 'iPhone 13 Pro front view'
+                    sort_order: 1
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    patch:
+      tags:
+        - Items
+      summary: Patch item (partial update)
+      description: |
+        Partially update an item. Only include fields you want to change.
+        Use PUT to replace the entire item.
+      operationId: patchItem
+      parameters:
+        - name: id
+          in: path
+          description: Item ID
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchItemRequest'
+            example:
+              price_cents: 60000
+        description: Fields to update (all optional)
+      responses:
+        '200':
+          description: Item patched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+              example:
+                id: 1
+                title: 'iPhone 13 Pro - Excellent Condition'
+                description: 'Selling my iPhone 13 Pro 256GB in excellent condition.'
+                price_cents: 60000
+                category: electronics
+                condition: like_new
+                status: active
+                is_featured: true
+                city: Strasbourg
+                postal_code: '67000'
+                country: FR
+                delivery_available: true
+                created_at: '2026-01-31T10:00:00.000Z'
+                updated_at: '2026-01-31T12:30:00.000Z'
+                published_at: '2026-01-31T10:00:00.000Z'
+                images: []
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - Items
+      summary: Delete item
+      description: Delete an item by ID
+      operationId: deleteItem
+      parameters:
+        - name: id
+          in: path
+          description: Item ID
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        '204':
+          description: Item deleted successfully
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: not_found
+                  message: Item not found
+                  details: {}
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+      properties:
+        status:
+          type: string
+          enum: [ok]
+          description: Health status
+        timestamp:
+          type: string
+          format: date-time
+          description: Current server timestamp
+
+    Item:
+      type: object
+      required:
+        - id
+        - title
+        - price_cents
+        - condition
+        - status
+        - is_featured
+        - country
+        - delivery_available
+        - created_at
+        - updated_at
+        - images
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Unique identifier
+          example: 1
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+          description: Item title
+          example: 'iPhone 13 Pro - Excellent Condition'
+        description:
+          type: string
+          nullable: true
+          description: Item description
+          example: 'Selling my iPhone 13 Pro 256GB in excellent condition.'
+        price_cents:
+          type: integer
+          minimum: 0
+          description: Price in cents
+          example: 65000
+        category:
+          type: string
+          nullable: true
+          description: Item category
+          example: electronics
+        condition:
+          type: string
+          enum: [new, like_new, good, fair, parts, unknown]
+          description: Item condition
+          example: like_new
+        status:
+          type: string
+          enum: [draft, active, reserved, sold, archived]
+          default: draft
+          description: Item status
+          example: active
+        is_featured:
+          type: boolean
+          description: Whether the item is featured
+          example: true
+        city:
+          type: string
+          nullable: true
+          description: City name
+          example: Strasbourg
+        postal_code:
+          type: string
+          nullable: true
+          description: Postal code
+          example: '67000'
+        country:
+          type: string
+          default: FR
+          description: Country code (ISO 3166-1 alpha-2)
+          example: FR
+        delivery_available:
+          type: boolean
+          description: Whether delivery is available
+          example: true
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: '2026-01-31T10:00:00.000Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: '2026-01-31T10:00:00.000Z'
+        published_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Publication timestamp
+          example: '2026-01-31T10:00:00.000Z'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemImage'
+          default: []
+          description: List of item images
+
+    ItemImage:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Image URL
+          example: 'https://example.com/images/item-1.jpg'
+        alt:
+          type: string
+          description: Alt text for accessibility
+          example: 'Front view of the item'
+        sort_order:
+          type: integer
+          minimum: 0
+          description: Display order
+          example: 1
+
+    CreateItemRequest:
+      type: object
+      required:
+        - title
+        - price_cents
+        - condition
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+          description: Item title
+          example: 'Vintage Leather Sofa'
+        description:
+          type: string
+          nullable: true
+          description: Item description
+          example: 'Beautiful vintage leather sofa from the 1970s.'
+        price_cents:
+          type: integer
+          minimum: 0
+          description: Price in cents
+          example: 35000
+        category:
+          type: string
+          nullable: true
+          description: Item category
+          example: furniture
+        condition:
+          type: string
+          enum: [new, like_new, good, fair, parts, unknown]
+          description: Item condition
+          example: good
+        status:
+          type: string
+          enum: [draft, active, reserved, sold, archived]
+          default: draft
+          description: Item status
+          example: draft
+        is_featured:
+          type: boolean
+          default: false
+          description: Whether the item is featured
+          example: false
+        city:
+          type: string
+          nullable: true
+          description: City name
+          example: Strasbourg
+        postal_code:
+          type: string
+          nullable: true
+          description: Postal code
+          example: '67000'
+        country:
+          type: string
+          default: FR
+          description: Country code
+          example: FR
+        delivery_available:
+          type: boolean
+          default: false
+          description: Whether delivery is available
+          example: false
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemImage'
+          default: []
+          description: List of item images
+
+    UpdateItemRequest:
+      type: object
+      required:
+        - title
+        - price_cents
+        - condition
+        - status
+        - is_featured
+        - country
+        - delivery_available
+        - images
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+          description: Item title
+          example: 'iPhone 13 Pro - Like New (Updated)'
+        description:
+          type: string
+          nullable: true
+          description: Item description
+          example: 'Updated description for the item.'
+        price_cents:
+          type: integer
+          minimum: 0
+          description: Price in cents
+          example: 62000
+        category:
+          type: string
+          nullable: true
+          description: Item category
+          example: electronics
+        condition:
+          type: string
+          enum: [new, like_new, good, fair, parts, unknown]
+          description: Item condition
+          example: like_new
+        status:
+          type: string
+          enum: [draft, active, reserved, sold, archived]
+          description: Item status
+          example: active
+        is_featured:
+          type: boolean
+          description: Whether the item is featured
+          example: true
+        city:
+          type: string
+          nullable: true
+          description: City name
+          example: Strasbourg
+        postal_code:
+          type: string
+          nullable: true
+          description: Postal code
+          example: '67000'
+        country:
+          type: string
+          description: Country code
+          example: FR
+        delivery_available:
+          type: boolean
+          description: Whether delivery is available
+          example: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemImage'
+          description: List of item images
+
+    PatchItemRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+          description: Item title
+          example: 'New Title'
+        description:
+          type: string
+          nullable: true
+          description: Item description
+          example: 'Updated description'
+        price_cents:
+          type: integer
+          minimum: 0
+          description: Price in cents
+          example: 60000
+        category:
+          type: string
+          nullable: true
+          description: Item category
+          example: electronics
+        condition:
+          type: string
+          enum: [new, like_new, good, fair, parts, unknown]
+          description: Item condition
+          example: good
+        status:
+          type: string
+          enum: [draft, active, reserved, sold, archived]
+          description: Item status
+          example: active
+        is_featured:
+          type: boolean
+          description: Whether the item is featured
+          example: true
+        city:
+          type: string
+          nullable: true
+          description: City name
+          example: Strasbourg
+        postal_code:
+          type: string
+          nullable: true
+          description: Postal code
+          example: '67000'
+        country:
+          type: string
+          description: Country code
+          example: FR
+        delivery_available:
+          type: boolean
+          description: Whether delivery is available
+          example: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemImage'
+          description: List of item images
+
+    ListItemsResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+          description: List of items
+        next_cursor:
+          type: string
+          format: byte
+          nullable: true
+          description: Cursor for next page (null if last page)
+          example: eyJpZCI6MjB9
+
+    ErrorDetail:
+      type: object
+      additionalProperties:
+        oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+      description: Error details with field-specific messages
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          required:
+            - code
+            - message
+            - details
+          properties:
+            code:
+              type: string
+              enum: [validation_error, not_found, internal_error]
+              description: Error code
+              example: validation_error
+            message:
+              type: string
+              description: Human-readable error message
+              example: Validation failed
+            details:
+              $ref: '#/components/schemas/ErrorDetail'
+              description: Detailed error information
+              example:
+                title: Title must be at least 3 characters
+                price_cents:
+                  - Price must be greater than or equal to 0

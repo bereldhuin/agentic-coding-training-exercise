@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LeBonPoint Marketplace</title>
+    <style>
+      :root {
+        --bg: #f4f2ef;
+        --panel: #ffffff;
+        --text: #1f2328;
+        --muted: #6b7280;
+        --accent: #f28a2e;
+        --accent-strong: #d86d12;
+        --border: #e6e1dc;
+        --shadow: rgba(0, 0, 0, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Trebuchet MS", "Verdana", "Arial", sans-serif;
+        color: var(--text);
+        background: var(--bg);
+      }
+
+      header {
+        padding: 28px clamp(16px, 4vw, 64px) 18px;
+        background: linear-gradient(110deg, #fff5ec, #ffffff 60%);
+        border-bottom: 1px solid var(--border);
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(28px, 4vw, 44px);
+        letter-spacing: -0.02em;
+      }
+
+      header p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      main {
+        padding: 24px clamp(16px, 4vw, 64px) 64px;
+        display: grid;
+        gap: 18px;
+      }
+
+      section {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: 0 12px 24px var(--shadow);
+      }
+
+      h2 {
+        margin: 0 0 12px;
+        font-size: 20px;
+      }
+
+      form {
+        display: grid;
+        gap: 12px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 10px;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: #fff;
+        font-size: 14px;
+        font-family: inherit;
+      }
+
+      button {
+        justify-self: start;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #ffffff;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.12s ease, background 0.12s ease;
+      }
+
+      button:hover {
+        background: var(--accent-strong);
+        transform: translateY(-1px);
+      }
+
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .panel-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+        gap: 16px;
+      }
+
+      .is-hidden {
+        display: none;
+      }
+
+      .items {
+        display: grid;
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .item-card {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px;
+        display: grid;
+        gap: 6px;
+        background: #ffffff;
+        cursor: pointer;
+      }
+
+      .item-card:hover {
+        border-color: var(--accent);
+      }
+
+      .item-title {
+        font-weight: 600;
+      }
+
+      .badge {
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
+        border-radius: 999px;
+        padding: 3px 10px;
+        background: #fff0e3;
+        color: #7a3c0c;
+        font-size: 12px;
+      }
+
+      .detail {
+        display: grid;
+        gap: 12px;
+      }
+
+      .detail h3 {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .detail-list {
+        display: grid;
+        gap: 6px;
+        font-size: 14px;
+      }
+
+      .images {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .image-pill {
+        background: #fff1e6;
+        border-radius: 999px;
+        padding: 2px 8px;
+        font-size: 12px;
+        color: #8a4b17;
+      }
+
+      .inline {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .status {
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #fff0e3;
+        font-size: 12px;
+        color: #8a4b17;
+      }
+
+      @media (max-width: 900px) {
+        .panel-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>LeBonPoint Marketplace</h1>
+      <p class="muted">Search, filter, and explore marketplace items in real time.</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>Search & Filter</h2>
+        <form id="list-form">
+          <div class="grid">
+            <label>
+              Search query
+              <input name="q" placeholder="iPhone, sofa, bicycle" />
+            </label>
+            <label>
+              Status
+              <select name="status">
+                <option value="">Any</option>
+                <option value="draft">draft</option>
+                <option value="active">active</option>
+                <option value="reserved">reserved</option>
+                <option value="sold">sold</option>
+                <option value="archived">archived</option>
+              </select>
+            </label>
+            <label>
+              Category
+              <select name="category">
+                <option value="">Any</option>
+                <option value="electronics">electronics</option>
+                <option value="furniture">furniture</option>
+                <option value="vehicles">vehicles</option>
+                <option value="home">home</option>
+                <option value="fashion">fashion</option>
+                <option value="services">services</option>
+                <option value="other">other</option>
+              </select>
+            </label>
+            <label>
+              Min price (€)
+              <input name="min_price_cents" data-type="number" step="1" inputmode="numeric" />
+            </label>
+            <label>
+              Max price (€)
+              <input name="max_price_cents" data-type="number" step="1" inputmode="numeric" />
+            </label>
+            <label>
+              Postal code
+              <input name="postal_code" placeholder="67000" />
+            </label>
+            <label>
+              Delivery available
+              <select name="delivery_available" data-type="boolean">
+                <option value="">Any</option>
+                <option value="true">true</option>
+                <option value="false">false</option>
+              </select>
+            </label>
+          </div>
+          <div class="inline">
+            <button type="submit">Search items</button>
+            <span class="muted" id="list-status">Ready</span>
+          </div>
+        </form>
+      </section>
+
+      <section id="results-section" class="is-hidden">
+        <div class="panel-row">
+          <div>
+            <div class="inline" style="justify-content: space-between;">
+              <h2>Results</h2>
+              <span class="muted" id="results-message"></span>
+            </div>
+            <div class="items" id="items-list"></div>
+          </div>
+          <div>
+            <h2>Item Detail</h2>
+            <div class="detail" id="item-detail">
+              <span class="muted">Select an item to view details.</span>
+            </div>
+            <div class="muted" id="detail-status" style="margin-top: 8px;">Idle</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const baseUrl = window.location.origin;
+
+      const request = async ({ path, method = "GET", body }) => {
+        const options = {
+          method,
+          headers: { "Content-Type": "application/json" }
+        };
+
+        if (body !== undefined) {
+          options.body = JSON.stringify(body);
+        }
+
+        let response;
+        let payload;
+        try {
+          response = await fetch(`${baseUrl}${path}`, options);
+          const text = await response.text();
+          payload = text ? JSON.parse(text) : null;
+        } catch (error) {
+          return {
+            ok: false,
+            status: "network_error",
+            payload: { error: String(error) }
+          };
+        }
+
+        return {
+          ok: response.ok,
+          status: response.status,
+          payload
+        };
+      };
+
+      const readForm = (form, { includeEmpty = false } = {}) => {
+        const data = {};
+        const fields = Array.from(form.querySelectorAll("input, select"));
+
+        fields.forEach((field) => {
+          if (!field.name) return;
+          const raw = field.value;
+          if (!includeEmpty && raw === "") return;
+
+          let value = raw;
+          const type = field.dataset.type;
+
+          if (type === "number") {
+            value = raw === "" ? undefined : Number(raw);
+          } else if (type === "boolean") {
+            if (raw === "") return;
+            value = raw === "true";
+          }
+
+          if (value !== undefined) {
+            data[field.name] = value;
+          }
+        });
+
+        return data;
+      };
+
+      const formatPrice = (priceCents) => {
+        if (priceCents === null || priceCents === undefined || Number.isNaN(priceCents)) {
+          return "-";
+        }
+        const euros = Number(priceCents) / 100;
+        return `€${euros.toFixed(2)}`;
+      };
+
+      const loadDetail = async (id) => {
+        if (!id) return;
+        detailStatus.textContent = "Loading...";
+        const result = await request({ path: `/v1/items/${id}` });
+        if (!result.ok) {
+          detailStatus.textContent = `Error ${result.status}`;
+          const detail = document.getElementById("item-detail");
+          detail.innerHTML = "<span class=\"muted\">Unable to load item.</span>";
+          return;
+        }
+        detailStatus.textContent = "Loaded";
+        renderDetail(result.payload);
+      };
+
+      const renderItems = (container, items) => {
+        container.innerHTML = "";
+        if (!items || items.length === 0) {
+          container.innerHTML = "<span class=\"muted\">No items found.</span>";
+          return;
+        }
+
+        items.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "item-card";
+          card.innerHTML = `
+            <div class="inline">
+              <span class="badge">#${item.id ?? "-"}</span>
+              <span class="item-title">${item.title ?? "Untitled"}</span>
+            </div>
+            <div class="muted">${item.category ?? "(no category)"} · ${item.condition ?? ""} · ${item.status ?? ""}</div>
+            <div>Price: ${formatPrice(item.price_cents)}</div>
+            <div class="muted">${item.city ?? ""} ${item.postal_code ?? ""} ${item.country ?? ""}</div>
+          `;
+
+          card.addEventListener("click", () => {
+            loadDetail(item.id);
+          });
+
+          container.appendChild(card);
+        });
+      };
+
+      const renderDetail = (item) => {
+        const detail = document.getElementById("item-detail");
+        detail.innerHTML = "";
+        const header = document.createElement("div");
+        header.innerHTML = `
+          <div class="inline">
+            <span class="badge">#${item.id ?? "-"}</span>
+            <h3>${item.title ?? "Untitled"}</h3>
+          </div>
+        `;
+
+        const meta = document.createElement("div");
+        meta.className = "detail-list";
+        meta.innerHTML = `
+          <div class="status">${item.status ?? ""}</div>
+          <div>${item.category ?? "(no category)"} · ${item.condition ?? ""}</div>
+          <div>Price: ${formatPrice(item.price_cents)}</div>
+          <div>${item.city ?? ""} ${item.postal_code ?? ""} ${item.country ?? ""}</div>
+          <div>Delivery: ${item.delivery_available ? "Available" : "Not available"}</div>
+        `;
+
+        const description = document.createElement("div");
+        description.textContent = item.description || "No description provided.";
+
+        const timestamps = document.createElement("div");
+        timestamps.className = "muted";
+        timestamps.textContent = `Created: ${item.created_at ?? ""} · Updated: ${item.updated_at ?? ""}`;
+
+        const images = document.createElement("div");
+        images.className = "images";
+        (item.images || []).forEach((image) => {
+          const pill = document.createElement("span");
+          pill.className = "image-pill";
+          pill.textContent = image.url;
+          images.appendChild(pill);
+        });
+
+        detail.appendChild(header);
+        detail.appendChild(meta);
+        detail.appendChild(description);
+        detail.appendChild(images);
+        detail.appendChild(timestamps);
+      };
+
+      const listForm = document.getElementById("list-form");
+      const listStatus = document.getElementById("list-status");
+      const itemsList = document.getElementById("items-list");
+      const resultsSection = document.getElementById("results-section");
+      const resultsMessage = document.getElementById("results-message");
+      const detailStatus = document.getElementById("detail-status");
+      const resetDetail = () => {
+        const detail = document.getElementById("item-detail");
+        detail.innerHTML = "<span class=\"muted\">Select an item to view details.</span>";
+        detailStatus.textContent = "Idle";
+      };
+      let nextCursor = null;
+
+      const fetchItems = async (overrides = {}) => {
+        listStatus.textContent = "Loading...";
+        resetDetail();
+        resultsSection.classList.remove("is-hidden");
+        resultsMessage.textContent = "";
+        const query = { ...readForm(listForm), ...overrides };
+        if (query.min_price_cents !== undefined) {
+          query.min_price_cents = Math.round(query.min_price_cents) * 100;
+        }
+        if (query.max_price_cents !== undefined) {
+          query.max_price_cents = Math.round(query.max_price_cents) * 100;
+        }
+        const params = new URLSearchParams();
+        Object.entries(query).forEach(([key, value]) => {
+          if (value === undefined || value === "") return;
+          params.set(key, String(value));
+        });
+
+        const path = `/v1/items${params.toString() ? `?${params}` : ""}`;
+        const result = await request({ path });
+
+        if (!result.ok) {
+          listStatus.textContent = `Error ${result.status}`;
+          renderItems(itemsList, []);
+          resultsMessage.textContent = "We couldn’t load results. Please try again.";
+          return;
+        }
+
+        listStatus.textContent = `Loaded ${result.payload?.items?.length ?? 0} items`;
+        resultsMessage.textContent = "";
+        const items = result.payload?.items || [];
+        renderItems(itemsList, items);
+        nextCursor = result.payload?.next_cursor ?? null;
+      };
+
+      listForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        await fetchItems();
+      });
+
+
+      
+    </script>
+  </body>
+</html>

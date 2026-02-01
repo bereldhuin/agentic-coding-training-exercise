@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Server Registry</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>MCP Server Registry</h1>
+        
+        <section id="register-section">
+            <h2>Register New Server</h2>
+            <form id="register-form">
+                <input type="text" id="name" placeholder="Server Name" required>
+                <input type="url" id="url" placeholder="http://<your-ip>:<port>/mcp" required>
+                <button type="submit">Register</button>
+            </form>
+        </section>
+
+        <section id="ip-section">
+            <h2>Utility: Find My IP</h2>
+            <div class="terminal">
+                <div class="terminal-header">Command Line Interface</div>
+                <div class="terminal-body">
+                    <p class="prompt">$ ifconfig | grep 'inet ' | grep -v 127.0.0.1</p>
+                    <button id="get-ip-btn">Run Command</button>
+                    <pre id="ip-output"></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="list-section">
+            <h2>Registered Servers</h2>
+            <ul id="server-list">
+                <!-- Servers will be injected here -->
+            </ul>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

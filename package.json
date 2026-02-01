@@ -1,0 +1,19 @@
+{
+  "name": "lebonpoint-app",
+  "private": true,
+  "scripts": {
+    "db:init": "tsx ./scripts/db-init.ts",
+    "db:seed": "tsx ./scripts/db-seed.ts",
+    "db:empty": "tsx ./scripts/db-empty.ts",
+    "db:verify": "tsx ./scripts/db-verify.ts",
+    "server:run": "node ./scripts/server-runner.js",
+    "server:verify": "node ./scripts/server-runner.js --verify-api"
+  },
+  "devDependencies": {
+    "pm2": "^5.4.2",
+    "tsx": "^4.21.0"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.6.2"
+  }
+}

@@ -123,7 +123,7 @@ async function buildIfNeeded(server) {
 }
 
 async function startServer(server) {
-  logInfo(`\nStarting ${server.label} on 0.0.0.0:${server.port}...`);
+  logInfo(`\nStarting ${server.label} on localhost:${server.port}...`);
   const child = spawnCommand(server.start.command, server.start.args, {
     cwd: server.cwd,
     env: resolveEnv(server),

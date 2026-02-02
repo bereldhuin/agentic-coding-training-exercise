@@ -33,9 +33,8 @@ const servers = [
     build: null,
     start: {
       command: 'poetry',
-      args: ['run', 'uvicorn', 'src.main:app', '--host', '0.0.0.0', '--port', '8000'],
-    },
-    env: { HOST: '0.0.0.0' },
+      args: ['run', 'uvicorn', 'src.main:app', '--port', '8000'],
+    }
   },
   {
     id: 'swift',

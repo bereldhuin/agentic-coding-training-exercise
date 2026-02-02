@@ -27,18 +27,16 @@ Practice the **plan-then-act** workflow by implementing a new feature in the Leb
 ---
 
 ## Doc: Superpowers
-
-1. Launch Claude
-2. `/plugin marketplace add obra/superpowers-marketplace`
-3. `/plugin install superpowers@superpowers-marketplace`
-4. Restart claude
-5. Choose between:  
-
-```
-/superpowers:brainstorm - Interactive design refinement
-/superpowers:write-plan - Create implementation plan
-/superpowers:execute-plan - Execute plan in batches
-```
+1. Install Skill from Skills.sh
+    ```bash
+    npx skills add https://github.com/obra/superpowers --skill brainstorming \
+        writing-plans \
+        executing-plans \
+        test-driven-development \
+        finishing-a-development-branch
+    ```
+2. Launch Claude
+3. Find the skills using `/<skill-name>` commands.
 
 ---
 

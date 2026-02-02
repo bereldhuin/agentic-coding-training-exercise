@@ -32,8 +32,6 @@ class FilterOptions:
 
     status: str | None = None
     category: str | None = None
-    min_price_cents: int | None = None
-    max_price_cents: int | None = None
     city: str | None = None
     postal_code: str | None = None
     is_featured: bool | None = None

@@ -119,12 +119,6 @@ class SQLiteItemRepository(ItemRepository):
             if filters.category:
                 where_conditions.append("category = ?")
                 params.append(filters.category)
-            if filters.min_price_cents is not None:
-                where_conditions.append("price_cents >= ?")
-                params.append(filters.min_price_cents)
-            if filters.max_price_cents is not None:
-                where_conditions.append("price_cents <= ?")
-                params.append(filters.max_price_cents)
             if filters.city:
                 where_conditions.append("city = ?")
                 params.append(filters.city)
@@ -194,12 +188,6 @@ class SQLiteItemRepository(ItemRepository):
             if options.filters.category:
                 where_conditions.append("items.category = ?")
                 params.append(options.filters.category)
-            if options.filters.min_price_cents is not None:
-                where_conditions.append("items.price_cents >= ?")
-                params.append(options.filters.min_price_cents)
-            if options.filters.max_price_cents is not None:
-                where_conditions.append("items.price_cents <= ?")
-                params.append(options.filters.max_price_cents)
             if options.filters.city:
                 where_conditions.append("items.city = ?")
                 params.append(options.filters.city)

@@ -86,14 +86,6 @@ export class SQLiteItemRepository implements IItemRepository {
         whereConditions.push('category = ?');
         params.push(filters.category);
       }
-      if (filters.min_price_cents !== undefined) {
-        whereConditions.push('price_cents >= ?');
-        params.push(filters.min_price_cents);
-      }
-      if (filters.max_price_cents !== undefined) {
-        whereConditions.push('price_cents <= ?');
-        params.push(filters.max_price_cents);
-      }
       if (filters.city) {
         whereConditions.push('city = ?');
         params.push(filters.city);
@@ -184,14 +176,6 @@ export class SQLiteItemRepository implements IItemRepository {
       if (filters.category) {
         whereConditions.push('items.category = ?');
         params.push(filters.category);
-      }
-      if (filters.min_price_cents !== undefined) {
-        whereConditions.push('items.price_cents >= ?');
-        params.push(filters.min_price_cents);
-      }
-      if (filters.max_price_cents !== undefined) {
-        whereConditions.push('items.price_cents <= ?');
-        params.push(filters.max_price_cents);
       }
       if (filters.city) {
         whereConditions.push('items.city = ?');

@@ -21,8 +21,6 @@ export class ListItemsUseCase {
     const filters: FilterOptions = {};
     if (validatedQuery.status) filters.status = validatedQuery.status;
     if (validatedQuery.category) filters.category = validatedQuery.category;
-    if (validatedQuery.min_price_cents !== undefined) filters.min_price_cents = validatedQuery.min_price_cents;
-    if (validatedQuery.max_price_cents !== undefined) filters.max_price_cents = validatedQuery.max_price_cents;
     if (validatedQuery.city) filters.city = validatedQuery.city;
     if (validatedQuery.postal_code) filters.postal_code = validatedQuery.postal_code;
     if (validatedQuery.is_featured !== undefined) filters.is_featured = validatedQuery.is_featured;

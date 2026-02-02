@@ -170,8 +170,6 @@ type HealthResponse struct {
 type QueryParams struct {
 	Status            *string
 	Category          *string
-	MinPriceCents     *int
-	MaxPriceCents     *int
 	City              *string
 	PostalCode        *string
 	IsFeatured        *bool

@@ -15,8 +15,6 @@ struct PaginationOptions: Sendable {
 struct ItemFilters: Sendable {
     let status: String?
     let category: String?
-    let minPriceCents: Int?
-    let maxPriceCents: Int?
     let city: String?
     let postalCode: String?
     let isFeatured: Bool?
@@ -25,8 +23,6 @@ struct ItemFilters: Sendable {
     init(
         status: String? = nil,
         category: String? = nil,
-        minPriceCents: Int? = nil,
-        maxPriceCents: Int? = nil,
         city: String? = nil,
         postalCode: String? = nil,
         isFeatured: Bool? = nil,
@@ -34,8 +30,6 @@ struct ItemFilters: Sendable {
     ) {
         self.status = status
         self.category = category
-        self.minPriceCents = minPriceCents
-        self.maxPriceCents = maxPriceCents
         self.city = city
         self.postalCode = postalCode
         self.isFeatured = isFeatured

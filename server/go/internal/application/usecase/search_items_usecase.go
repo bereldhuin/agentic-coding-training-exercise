@@ -67,14 +67,6 @@ func (uc *SearchItemsUseCase) buildFilters(params *dto.QueryParams) *repository.
 		filters.Category = params.Category
 	}
 
-	if params.MinPriceCents != nil {
-		filters.MinPriceCents = params.MinPriceCents
-	}
-
-	if params.MaxPriceCents != nil {
-		filters.MaxPriceCents = params.MaxPriceCents
-	}
-
 	if params.City != nil && *params.City != "" {
 		filters.City = params.City
 	}
@@ -93,7 +85,6 @@ func (uc *SearchItemsUseCase) buildFilters(params *dto.QueryParams) *repository.
 
 	// Return nil if no filters are set
 	if filters.Status == nil && filters.Category == nil &&
-		filters.MinPriceCents == nil && filters.MaxPriceCents == nil &&
 		filters.City == nil && filters.PostalCode == nil &&
 		filters.IsFeatured == nil && filters.DeliveryAvailable == nil {
 		return nil

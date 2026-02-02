@@ -35,8 +35,6 @@ type ItemRepository interface {
 type ItemFilters struct {
 	Status            *valueobject.ItemStatus
 	Category          *string
-	MinPriceCents     *int
-	MaxPriceCents     *int
 	City              *string
 	PostalCode        *string
 	IsFeatured        *bool

@@ -82,12 +82,6 @@ actor SQLiteItemRepository: ItemRepositoryProtocol {
         if let category = filters.category {
             whereConditions.append("category = \(bind: category)")
         }
-        if let minPrice = filters.minPriceCents {
-            whereConditions.append("price_cents >= \(bind: minPrice)")
-        }
-        if let maxPrice = filters.maxPriceCents {
-            whereConditions.append("price_cents <= \(bind: maxPrice)")
-        }
         if let city = filters.city {
             whereConditions.append("city = \(bind: city)")
         }
@@ -156,12 +150,6 @@ actor SQLiteItemRepository: ItemRepositoryProtocol {
         }
         if let category = filters.category {
             whereConditions.append("items.category = \(bind: category)")
-        }
-        if let minPrice = filters.minPriceCents {
-            whereConditions.append("items.price_cents >= \(bind: minPrice)")
-        }
-        if let maxPrice = filters.maxPriceCents {
-            whereConditions.append("items.price_cents <= \(bind: maxPrice)")
         }
         if let city = filters.city {
             whereConditions.append("items.city = \(bind: city)")

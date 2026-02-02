@@ -203,28 +203,6 @@ func (h *ItemHandler) parseQueryParams(c *gin.Context) (*dto.QueryParams, error)
 	if category := c.Query("category"); category != "" {
 		params.Category = &category
 	}
-	if minPrice := queryFirst(c, "min_price_cents", "minPriceCents"); minPrice != "" {
-		if val, err := strconv.Atoi(minPrice); err == nil {
-			if val < 0 {
-				details["min_price_cents"] = "min_price_cents must be greater than or equal to 0"
-			} else {
-				params.MinPriceCents = &val
-			}
-		} else {
-			details["min_price_cents"] = "min_price_cents must be an integer"
-		}
-	}
-	if maxPrice := queryFirst(c, "max_price_cents", "maxPriceCents"); maxPrice != "" {
-		if val, err := strconv.Atoi(maxPrice); err == nil {
-			if val < 0 {
-				details["max_price_cents"] = "max_price_cents must be greater than or equal to 0"
-			} else {
-				params.MaxPriceCents = &val
-			}
-		} else {
-			details["max_price_cents"] = "max_price_cents must be an integer"
-		}
-	}
 	if city := c.Query("city"); city != "" {
 		params.City = &city
 	}

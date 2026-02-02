@@ -143,41 +143,6 @@ class SQLiteItemRepositoryTest {
     }
 
     @Test
-    fun `should filter items by price range`() = runTest {
-        // Arrange
-        repository.create(
-            CreateItemData(
-                title = "Item 1",
-                priceCents = 1000,
-                condition = ItemCondition.NEW
-            )
-        )
-        repository.create(
-            CreateItemData(
-                title = "Item 2",
-                priceCents = 5000,
-                condition = ItemCondition.GOOD
-            )
-        )
-        repository.create(
-            CreateItemData(
-                title = "Item 3",
-                priceCents = 10000,
-                condition = ItemCondition.FAIR
-            )
-        )
-
-        // Act
-        val page = repository.findAll(
-            filters = ItemFilters(minPriceCents = 2000, maxPriceCents = 8000)
-        )
-
-        // Assert
-        assertEquals(1, page.items.size)
-        assertEquals(5000, page.items[0].priceCents)
-    }
-
-    @Test
     fun `should sort items by price descending`() = runTest {
         // Arrange
         repository.create(

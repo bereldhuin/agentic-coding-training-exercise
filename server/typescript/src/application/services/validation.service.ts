@@ -74,8 +74,6 @@ export const patchItemSchema = z.object({
 export const listItemsQuerySchema = z.object({
   status: z.enum(STATUS_VALUES as readonly [string, ...string[]]).optional(),
   category: z.string().optional(),
-  min_price_cents: z.coerce.number().int().nonnegative().optional(),
-  max_price_cents: z.coerce.number().int().nonnegative().optional(),
   city: z.string().optional(),
   postal_code: z.string().optional(),
   is_featured: z.coerce.boolean().optional(),

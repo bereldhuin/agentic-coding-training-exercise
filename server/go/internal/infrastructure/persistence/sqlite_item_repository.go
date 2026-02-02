@@ -299,14 +299,6 @@ func (r *sqliteItemRepository) Search(ctx context.Context, queryStr string, filt
 			filterJoins = append(filterJoins, "items.category = ?")
 			filterArgs = append(filterArgs, *filters.Category)
 		}
-		if filters.MinPriceCents != nil {
-			filterJoins = append(filterJoins, "items.price_cents >= ?")
-			filterArgs = append(filterArgs, *filters.MinPriceCents)
-		}
-		if filters.MaxPriceCents != nil {
-			filterJoins = append(filterJoins, "items.price_cents <= ?")
-			filterArgs = append(filterArgs, *filters.MaxPriceCents)
-		}
 		if filters.City != nil && *filters.City != "" {
 			filterJoins = append(filterJoins, "items.city = ?")
 			filterArgs = append(filterArgs, *filters.City)
@@ -495,16 +487,6 @@ func (r *sqliteItemRepository) buildFilterConditions(filters *repository.ItemFil
 	if filters.Category != nil && *filters.Category != "" {
 		conditions = append(conditions, "category = ?")
 		args = append(args, *filters.Category)
-	}
-
-	if filters.MinPriceCents != nil {
-		conditions = append(conditions, "price_cents >= ?")
-		args = append(args, *filters.MinPriceCents)
-	}
-
-	if filters.MaxPriceCents != nil {
-		conditions = append(conditions, "price_cents <= ?")
-		args = append(args, *filters.MaxPriceCents)
 	}
 
 	if filters.City != nil && *filters.City != "" {

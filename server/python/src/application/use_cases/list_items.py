@@ -47,8 +47,6 @@ class ListItemsUseCase:
         filters = FilterOptions(
             status=status,
             category=query_params.get("category"),
-            min_price_cents=self._parse_int(query_params.get("min_price_cents")),
-            max_price_cents=self._parse_int(query_params.get("max_price_cents")),
             city=query_params.get("city"),
             postal_code=query_params.get("postal_code"),
             is_featured=self._parse_bool(query_params.get("is_featured")),

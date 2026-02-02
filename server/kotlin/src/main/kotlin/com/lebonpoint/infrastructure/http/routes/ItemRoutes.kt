@@ -36,8 +36,6 @@ fun Routing.configureItemRoutes(
         get {
             val status = call.request.queryParameters["status"]
             val category = call.request.queryParameters["category"]
-            val minPriceCents = call.request.queryParameters["min_price_cents"]?.toIntOrNull()
-            val maxPriceCents = call.request.queryParameters["max_price_cents"]?.toIntOrNull()
             val city = call.request.queryParameters["city"]
             val postalCode = call.request.queryParameters["postal_code"]
             val isFeatured = call.request.queryParameters["is_featured"]?.toBooleanStrictOrNull()
@@ -50,8 +48,6 @@ fun Routing.configureItemRoutes(
             val result = listItemsUseCase.execute(
                 status = status,
                 category = category,
-                minPriceCents = minPriceCents,
-                maxPriceCents = maxPriceCents,
                 city = city,
                 postalCode = postalCode,
                 isFeatured = isFeatured,

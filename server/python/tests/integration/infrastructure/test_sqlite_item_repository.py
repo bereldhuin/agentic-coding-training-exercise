@@ -97,10 +97,6 @@ class TestSQLiteItemRepository:
         result = await test_repository.find_all(filters=FilterOptions(category="electronics"))
         assert len(result.items) == 1
 
-        # Filter by price range
-        result = await test_repository.find_all(filters=FilterOptions(min_price_cents=10000))
-        assert len(result.items) == 1
-
     async def test_find_all_with_sorting(
         self, test_repository: SQLiteItemRepository, sample_item_data: CreateItemData
     ) -> None:

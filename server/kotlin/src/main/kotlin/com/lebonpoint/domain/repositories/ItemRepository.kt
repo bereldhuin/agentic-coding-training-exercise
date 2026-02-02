@@ -11,8 +11,6 @@ import com.lebonpoint.domain.entities.ReplaceItemData
 data class ItemFilters(
     val status: String? = null,
     val category: String? = null,
-    val minPriceCents: Int? = null,
-    val maxPriceCents: Int? = null,
     val city: String? = null,
     val postalCode: String? = null,
     val isFeatured: Boolean? = null,

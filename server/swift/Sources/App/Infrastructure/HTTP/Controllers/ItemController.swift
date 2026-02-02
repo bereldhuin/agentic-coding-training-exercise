@@ -30,32 +30,6 @@ struct ItemController {
 
         let category = req.query["category"] as String?
 
-        var minPriceCents: Int?
-        if let minPriceStr = req.query["min_price_cents"] as String? {
-            if let value = Int(minPriceStr) {
-                if value < 0 {
-                    validationErrors["min_price_cents"] = "min_price_cents must be greater than or equal to 0"
-                } else {
-                    minPriceCents = value
-                }
-            } else {
-                validationErrors["min_price_cents"] = "min_price_cents must be an integer"
-            }
-        }
-
-        var maxPriceCents: Int?
-        if let maxPriceStr = req.query["max_price_cents"] as String? {
-            if let value = Int(maxPriceStr) {
-                if value < 0 {
-                    validationErrors["max_price_cents"] = "max_price_cents must be greater than or equal to 0"
-                } else {
-                    maxPriceCents = value
-                }
-            } else {
-                validationErrors["max_price_cents"] = "max_price_cents must be an integer"
-            }
-        }
-
         let city = req.query["city"] as String?
         let postalCode = req.query["postal_code"] as String?
 
@@ -87,8 +61,6 @@ struct ItemController {
         let filters = ItemFilters(
             status: status,
             category: category,
-            minPriceCents: minPriceCents,
-            maxPriceCents: maxPriceCents,
             city: city,
             postalCode: postalCode,
             isFeatured: isFeatured,

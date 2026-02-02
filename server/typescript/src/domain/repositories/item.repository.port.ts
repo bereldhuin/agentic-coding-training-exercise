@@ -14,8 +14,6 @@ export interface PaginationOptions {
 export interface FilterOptions {
   status?: string;
   category?: string;
-  min_price_cents?: number;
-  max_price_cents?: number;
   city?: string;
   postal_code?: string;
   is_featured?: boolean;

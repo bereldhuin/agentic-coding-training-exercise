@@ -114,8 +114,6 @@ final class DomainTests: XCTestCase {
 
         XCTAssertNil(filters.status)
         XCTAssertNil(filters.category)
-        XCTAssertNil(filters.minPriceCents)
-        XCTAssertNil(filters.maxPriceCents)
         XCTAssertNil(filters.city)
         XCTAssertNil(filters.postalCode)
         XCTAssertNil(filters.isFeatured)
@@ -126,15 +124,11 @@ final class DomainTests: XCTestCase {
         let filters = ItemFilters(
             status: "active",
             category: "electronics",
-            minPriceCents: 1000,
-            maxPriceCents: 50000,
             isFeatured: true
         )
 
         XCTAssertEqual(filters.status, "active")
         XCTAssertEqual(filters.category, "electronics")
-        XCTAssertEqual(filters.minPriceCents, 1000)
-        XCTAssertEqual(filters.maxPriceCents, 50000)
         XCTAssertEqual(filters.isFeatured, true)
     }
 

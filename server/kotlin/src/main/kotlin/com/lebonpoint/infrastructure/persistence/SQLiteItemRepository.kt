@@ -380,8 +380,6 @@ class SQLiteItemRepository(
 
         filters.status?.let { conditions.add("status = ?") }
         filters.category?.let { conditions.add("category = ?") }
-        filters.minPriceCents?.let { conditions.add("price_cents >= ?") }
-        filters.maxPriceCents?.let { conditions.add("price_cents <= ?") }
         filters.city?.let { conditions.add("city = ?") }
         filters.postalCode?.let { conditions.add("postal_code = ?") }
         filters.isFeatured?.let { conditions.add("is_featured = ?") }
@@ -418,8 +416,6 @@ class SQLiteItemRepository(
 
         filters.status?.let { stmt.setString(index++, it) }
         filters.category?.let { stmt.setString(index++, it) }
-        filters.minPriceCents?.let { stmt.setInt(index++, it) }
-        filters.maxPriceCents?.let { stmt.setInt(index++, it) }
         filters.city?.let { stmt.setString(index++, it) }
         filters.postalCode?.let { stmt.setString(index++, it) }
         filters.isFeatured?.let { stmt.setInt(index++, if (it) 1 else 0) }

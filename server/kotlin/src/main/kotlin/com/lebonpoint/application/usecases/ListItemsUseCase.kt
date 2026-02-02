@@ -20,8 +20,6 @@ class ListItemsUseCase(
      * Execute the use case
      * @param status Filter by status
      * @param category Filter by category
-     * @param minPriceCents Filter by minimum price
-     * @param maxPriceCents Filter by maximum price
      * @param city Filter by city
      * @param postalCode Filter by postal code
      * @param isFeatured Filter by featured status
@@ -35,8 +33,6 @@ class ListItemsUseCase(
     suspend fun execute(
         status: String? = null,
         category: String? = null,
-        minPriceCents: Int? = null,
-        maxPriceCents: Int? = null,
         city: String? = null,
         postalCode: String? = null,
         isFeatured: Boolean? = null,
@@ -60,8 +56,6 @@ class ListItemsUseCase(
         val filters = ItemFilters(
             status = normalizedStatus,
             category = category,
-            minPriceCents = minPriceCents,
-            maxPriceCents = maxPriceCents,
             city = city,
             postalCode = postalCode,
             isFeatured = isFeatured,

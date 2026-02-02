@@ -10,10 +10,19 @@
     "server:verify": "node ./scripts/server-runner.js --verify-api"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.1.0",
+    "@types/supertest": "^6.0.3",
     "pm2": "^5.4.2",
-    "tsx": "^4.21.0"
+    "supertest": "^7.2.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   },
   "dependencies": {
-    "better-sqlite3": "^12.6.2"
+    "better-sqlite3": "^12.6.2",
+    "express": "^5.2.1",
+    "zod": "^4.3.6"
   }
 }

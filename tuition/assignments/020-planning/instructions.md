@@ -39,3 +39,10 @@ Practice the **plan-then-act** workflow by implementing a new feature in the Leb
 /superpowers:write-plan - Create implementation plan
 /superpowers:execute-plan - Execute plan in batches
 ```
+
+---
+
+### Hints
+
+- Optionally brainstorm, write and review the implementation plan. Provide the API documentation to the brainstorming or planning tool to ensure alignment with the existing contract.
+- Examine `[openapi.yaml](/server/api/openapi.yaml)` to understand the contract all servers must follow.

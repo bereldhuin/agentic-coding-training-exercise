@@ -6,9 +6,6 @@ layout: center
 
 ---
 
-
----
-
 ### Goal
 
 Learn how to configure your project for agentic coding and write a new feature.
@@ -25,7 +22,7 @@ The project emphasizes API consistency, where all implementations share the same
 
 ### Task
 
-Explore the Lebonpoint architecture and implement the search by price feature on your chosen backend. The feature should allow users to filter items based on a minimum and maximum price range. Refer to the [openapi.yaml](/server/api/openapi.yaml) file for the exact schema and endpoint details.
+Explore the Lebonpoint architecture and implement the search by price feature on your chosen backend. The feature should allow users to filter items based on a minimum and maximum price range.
 
 #### Step 1: Introducing Lebonpoint
 
@@ -61,10 +58,3 @@ Understand the project structure and the role of the different tiers:
 #### Step 3: Generate Price Filter Feature
 
 - Use Claude, Codex or another AI assistant to help you implement the price filter feature in your chosen backend(s).
-- Ensure that the new feature adheres to the existing API contract defined in `openapi.yaml`.
-
----
-
-### Hints
-
-- Examine `[openapi.yaml](/server/api/openapi.yaml)` to understand the contract all servers must follow.

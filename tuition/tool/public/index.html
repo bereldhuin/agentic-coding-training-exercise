@@ -24,9 +24,14 @@
             <div class="terminal">
                 <div class="terminal-header">Command Line Interface</div>
                 <div class="terminal-body">
-                    <p class="prompt">$ ifconfig | grep 'inet ' | grep -v 127.0.0.1</p>
-                    <button id="get-ip-btn">Run Command</button>
-                    <pre id="ip-output"></pre>
+                    <div class="command-line">
+                        <p class="prompt">$ ifconfig | grep 'inet ' | grep -v 127.0.0.1</p>
+                        <button class="copy-terminal-btn" onclick="copyToClipboard('ifconfig | grep \'inet \' | grep -v 127.0.0.1')" title="Copy command">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10.5 1H3.5C2.67 1 2 1.67 2 2.5V11.5H3.5V2.5H10.5V1ZM12.5 4H6.5C5.67 4 5 4.67 5 5.5V13.5C5 14.33 5.67 15 6.5 15H12.5C13.33 15 14 14.33 14 13.5V5.5C14 4.67 13.33 4 12.5 4ZM12.5 13.5H6.5V5.5H12.5V13.5Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>

@@ -63,6 +63,36 @@ button:hover {
     color: #636d83;
 }
 
+.command-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.copy-terminal-btn {
+    background-color: #1e2127;
+    color: #abb2bf;
+    border: 1px solid #3e4451;
+    border-radius: 4px;
+    padding: 6px 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.copy-terminal-btn:hover {
+    background-color: #2c313a;
+    border-color: #528bff;
+    color: #528bff;
+}
+
+.copy-terminal-btn svg {
+    display: block;
+}
+
 .terminal-body {
     padding: 15px;
 }
@@ -107,6 +137,16 @@ li.error { border-left-color: #e74c3c; }
 
 .server-actions {
     margin-left: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.server-actions button:last-child {
+    background-color: #27ae60;
+}
+
+.server-actions button:last-child:hover {
+    background-color: #229954;
 }
 
 .status-badge {

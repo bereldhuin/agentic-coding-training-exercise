@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('register-form');
     const serverList = document.getElementById('server-list');
-    const getIpBtn = document.getElementById('get-ip-btn');
-    const ipOutput = document.getElementById('ip-output');
 
     // Fetch and display servers
     const fetchServers = async () => {
@@ -26,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="server-actions">
                     <button onclick="verifyServer('${server.id}')">Verify</button>
+                    <button onclick="copyMcpCommand('${server.name}', '${server.url}')">Copy Command</button>
                 </div>
             </li>
         `).join('');
@@ -64,23 +63,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Get IP Address
-    getIpBtn.addEventListener('click', async () => {
-        ipOutput.textContent = 'Running command...';
+    // Copy MCP command to clipboard
+    window.copyMcpCommand = async (name, url) => {
         try {
-            const response = await fetch('/api/ip-cmd');
-            const data = await response.json();
-            if (data.output) {
-                ipOutput.textContent = data.output;
-            } else if (data.error) {
-                ipOutput.textContent = 'Error: ' + data.error;
-            } else {
-                ipOutput.textContent = 'No output';
-            }
+            // Extract IP and port from URL (e.g., http://192.168.1.100:3000/mcp -> 192.168.1.100:3000)
+            const urlObj = new URL(url);
+            const ipWithPort = `${urlObj.hostname}:${urlObj.port}`;
+
+            // Build the command
+            const command = `claude mcp add ${name} ${ipWithPort} --transport http --scope project`;
+
+            // Copy to clipboard
+            await navigator.clipboard.writeText(command);
+
+            // Show success feedback
+            alert('Command copied to clipboard!');
         } catch (error) {
-            ipOutput.textContent = 'Failed to execute command';
+            console.error('Error copying to clipboard:', error);
+            alert('Failed to copy command');
         }
-    });
+    };
+
+    // Copy text to clipboard (generic helper)
+    window.copyToClipboard = async (text) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            alert('Copied to clipboard!');
+        } catch (error) {
+            console.error('Error copying to clipboard:', error);
+            alert('Failed to copy');
+        }
+    };
 
     // Initial load
     fetchServers();

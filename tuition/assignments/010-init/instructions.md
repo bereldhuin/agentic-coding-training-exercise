@@ -6,6 +6,9 @@ layout: center
 
 ---
 
+
+---
+
 ### Goal
 
 Learn how to configure your project for agentic coding and write a new feature.

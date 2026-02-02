@@ -13,7 +13,6 @@ struct App {
         do {
             let config = Configuration.shared
 
-            app.http.server.configuration.hostname = "0.0.0.0"
             app.http.server.configuration.port = config.port
 
             try configure(app)

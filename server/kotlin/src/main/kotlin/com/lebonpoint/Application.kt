@@ -25,7 +25,7 @@ import kotlin.system.exitProcess
  * Main application entry point
  */
 fun main() {
-    val server = embeddedServer(Netty, port = Configuration.port, host = "0.0.0.0", module = Application::module)
+    val server = embeddedServer(Netty, port = Configuration.port, module = Application::module)
 
     // Add shutdown hook
     Runtime.getRuntime().addShutdownHook(Thread {

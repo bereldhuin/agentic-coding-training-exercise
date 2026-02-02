@@ -75,7 +75,6 @@ The server can be configured via environment variables or a `.env` file:
 ```bash
 # Server configuration
 PORT=8000
-HOST=0.0.0.0
 
 # Database path (relative to server/python directory)
 DATABASE_PATH=../database/db.sqlite
@@ -89,13 +88,13 @@ ENVIRONMENT=development
 ### Development mode (with auto-reload):
 
 ```bash
-poetry run uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
+poetry run uvicorn src.main:app --reload --port 8000
 ```
 
 ### Production mode:
 
 ```bash
-poetry run uvicorn src.main:app --host 0.0.0.0 --port 8000 --workers 4
+poetry run uvicorn src.main:app --port 8000 --workers 4
 ```
 
 Or using the built-in main:

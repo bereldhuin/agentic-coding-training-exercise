@@ -9,7 +9,6 @@ class Config:
 
     def __init__(self) -> None:
         self._port = int(os.getenv("PORT", "8000"))
-        self._host = os.getenv("HOST", "0.0.0.0")
         self._database_path = os.getenv("DATABASE_PATH", "../database/db.sqlite")
         self._environment = os.getenv("ENVIRONMENT", "development")
 
@@ -17,11 +16,6 @@ class Config:
     def port(self) -> int:
         """Get the server port."""
         return self._port
-
-    @property
-    def host(self) -> str:
-        """Get the server host."""
-        return self._host
 
     @property
     def database_path(self) -> Path:

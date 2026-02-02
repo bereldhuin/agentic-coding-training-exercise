@@ -27,7 +27,7 @@ from pydantic import ValidationError as PydanticValidationError
 async def lifespan(app: FastAPI):
     """Application lifespan manager."""
     # Startup
-    print(f"Starting LeBonPoint Python server on {config.host}:{config.port}")
+    print(f"Starting LeBonPoint Python server on port {config.port}")
     print(f"Database path: {config.database_path}")
     print(f"Environment: {config.environment}")
     yield
@@ -104,9 +104,4 @@ async def root() -> FileResponse:
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(
-        "main:app",
-        host=config.host,
-        port=config.port,
-        reload=config.is_development,
-    )
+    uvicorn.run("main:app", port=config.port, reload=config.is_development)

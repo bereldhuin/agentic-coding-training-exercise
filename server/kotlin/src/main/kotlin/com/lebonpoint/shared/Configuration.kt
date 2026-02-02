@@ -17,7 +17,9 @@ object Configuration {
      * Relative to project root or absolute path
      */
     val databasePath: String by lazy {
-        System.getenv("DATABASE_PATH") ?: "../database/db.sqlite"
+        System.getProperty("DATABASE_PATH")
+            ?: System.getenv("DATABASE_PATH")
+            ?: "../database/db.sqlite"
     }
 
     /**

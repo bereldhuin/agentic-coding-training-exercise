@@ -147,13 +147,11 @@ object DatabaseConfig {
             stmt.execute("CREATE INDEX IF NOT EXISTS idx_items_city ON items(city)")
             stmt.execute("CREATE INDEX IF NOT EXISTS idx_items_price_cents ON items(price_cents)")
 
-            // Create FTS5 virtual table
+            // Create FTS5 virtual table for manual indexing
             stmt.execute("""
                 CREATE VIRTUAL TABLE IF NOT EXISTS items_fts USING fts5(
                     title,
                     description,
-                    content=items,
-                    content_rowid=rowid,
                     tokenize='unicode61 remove_diacritics 1'
                 )
             """.trimIndent())

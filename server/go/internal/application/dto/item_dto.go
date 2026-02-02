@@ -11,18 +11,18 @@ type ItemResponse struct {
 	ID                int64                     `json:"id"`
 	Title             string                    `json:"title"`
 	Description       string                    `json:"description,omitempty"`
-	PriceCents        int                       `json:"priceCents"`
+	PriceCents        int                       `json:"price_cents"`
 	Category          string                    `json:"category,omitempty"`
 	Condition         valueobject.ItemCondition `json:"condition"`
 	Status            valueobject.ItemStatus    `json:"status"`
-	IsFeatured        bool                      `json:"isFeatured"`
+	IsFeatured        bool                      `json:"is_featured"`
 	City              string                    `json:"city,omitempty"`
-	PostalCode        string                    `json:"postalCode,omitempty"`
+	PostalCode        string                    `json:"postal_code,omitempty"`
 	Country           string                    `json:"country"`
-	DeliveryAvailable bool                      `json:"deliveryAvailable"`
-	CreatedAt         time.Time                 `json:"createdAt"`
-	UpdatedAt         time.Time                 `json:"updatedAt"`
-	PublishedAt       *time.Time                `json:"publishedAt,omitempty"`
+	DeliveryAvailable bool                      `json:"delivery_available"`
+	CreatedAt         time.Time                 `json:"created_at"`
+	UpdatedAt         time.Time                 `json:"updated_at"`
+	PublishedAt       *time.Time                `json:"published_at,omitempty"`
 	Images            []valueobject.ItemImage   `json:"images"`
 }
 
@@ -36,15 +36,15 @@ func (ir *ItemResponse) FromEntity(item interface{}) {
 type CreateItemRequest struct {
 	Title             string                    `json:"title" binding:"required,min=3,max=200"`
 	Description       string                    `json:"description,omitempty"`
-	PriceCents        int                       `json:"priceCents" binding:"required,gte=0"`
+	PriceCents        int                       `json:"price_cents" binding:"required,gte=0"`
 	Category          string                    `json:"category,omitempty"`
 	Condition         valueobject.ItemCondition `json:"condition" binding:"required"`
 	Status            valueobject.ItemStatus    `json:"status" binding:"required,oneof=draft active reserved sold archived"`
-	IsFeatured        bool                      `json:"isFeatured"`
+	IsFeatured        bool                      `json:"is_featured"`
 	City              string                    `json:"city,omitempty"`
-	PostalCode        string                    `json:"postalCode,omitempty"`
+	PostalCode        string                    `json:"postal_code,omitempty"`
 	Country           string                    `json:"country" binding:"required"`
-	DeliveryAvailable bool                      `json:"deliveryAvailable"`
+	DeliveryAvailable bool                      `json:"delivery_available"`
 	Images            []valueobject.ItemImage   `json:"images"`
 }
 
@@ -69,15 +69,15 @@ func (req *CreateItemRequest) GetDefaultValues() map[string]interface{} {
 type UpdateItemRequest struct {
 	Title             string                    `json:"title" binding:"required,min=3,max=200"`
 	Description       string                    `json:"description,omitempty"`
-	PriceCents        int                       `json:"priceCents" binding:"required,gte=0"`
+	PriceCents        int                       `json:"price_cents" binding:"required,gte=0"`
 	Category          string                    `json:"category,omitempty"`
 	Condition         valueobject.ItemCondition `json:"condition" binding:"required"`
 	Status            valueobject.ItemStatus    `json:"status" binding:"required,oneof=draft active reserved sold archived"`
-	IsFeatured        bool                      `json:"isFeatured"`
+	IsFeatured        bool                      `json:"is_featured"`
 	City              string                    `json:"city,omitempty"`
-	PostalCode        string                    `json:"postalCode,omitempty"`
+	PostalCode        string                    `json:"postal_code,omitempty"`
 	Country           string                    `json:"country" binding:"required"`
-	DeliveryAvailable bool                      `json:"deliveryAvailable"`
+	DeliveryAvailable bool                      `json:"delivery_available"`
 	Images            []valueobject.ItemImage   `json:"images"`
 }
 
@@ -85,15 +85,15 @@ type UpdateItemRequest struct {
 type PatchItemRequest struct {
 	Title             *string                    `json:"title" binding:"omitempty,min=3,max=200"`
 	Description       *string                    `json:"description,omitempty"`
-	PriceCents        *int                       `json:"priceCents" binding:"omitempty,gte=0"`
+	PriceCents        *int                       `json:"price_cents" binding:"omitempty,gte=0"`
 	Category          *string                    `json:"category,omitempty"`
 	Condition         *valueobject.ItemCondition `json:"condition,omitempty"`
 	Status            *valueobject.ItemStatus    `json:"status" binding:"omitempty,oneof=draft active reserved sold archived"`
-	IsFeatured        *bool                      `json:"isFeatured,omitempty"`
+	IsFeatured        *bool                      `json:"is_featured,omitempty"`
 	City              *string                    `json:"city,omitempty"`
-	PostalCode        *string                    `json:"postalCode,omitempty"`
+	PostalCode        *string                    `json:"postal_code,omitempty"`
 	Country           *string                    `json:"country,omitempty"`
-	DeliveryAvailable *bool                      `json:"deliveryAvailable,omitempty"`
+	DeliveryAvailable *bool                      `json:"delivery_available,omitempty"`
 	Images            *[]valueobject.ItemImage   `json:"images,omitempty"`
 }
 
@@ -116,8 +116,8 @@ func (req *PatchItemRequest) HasChanges() bool {
 // ListItemsResponse represents a paginated list of items
 type ListItemsResponse struct {
 	Items      []*ItemResponse `json:"items"`
-	NextCursor *string         `json:"nextCursor,omitempty"`
-	TotalCount int             `json:"totalCount"`
+	NextCursor *string         `json:"next_cursor,omitempty"`
+	TotalCount int             `json:"total_count"`
 	Limit      int             `json:"limit"`
 }
 

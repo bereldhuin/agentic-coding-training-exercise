@@ -114,6 +114,10 @@
         font-size: 13px;
       }
 
+      .error {
+        color: #c62828;
+      }
+
       .panel-row {
         display: grid;
         grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
@@ -369,15 +373,19 @@
 
       const loadDetail = async (id) => {
         if (!id) return;
-        detailStatus.textContent = "Loading...";
+        setStatus(detailStatus, "Loading...", false);
         const result = await request({ path: `/v1/items/${id}` });
         if (!result.ok) {
-          detailStatus.textContent = `Error ${result.status}`;
+          const message =
+            result.status === "no_response" || result.status === "network_error"
+              ? "Error: server did not respond"
+              : `Error ${result.status}`;
+          setStatus(detailStatus, message, true);
           const detail = document.getElementById("item-detail");
           detail.innerHTML = "<span class=\"muted\">Unable to load item.</span>";
           return;
         }
-        detailStatus.textContent = "Loaded";
+        setStatus(detailStatus, "Loaded", false);
         renderDetail(result.payload);
       };
 
@@ -459,15 +467,19 @@
       const resultsSection = document.getElementById("results-section");
       const resultsMessage = document.getElementById("results-message");
       const detailStatus = document.getElementById("detail-status");
+      const setStatus = (element, message, isError = false) => {
+        element.textContent = message;
+        element.classList.toggle("error", isError);
+      };
       const resetDetail = () => {
         const detail = document.getElementById("item-detail");
         detail.innerHTML = "<span class=\"muted\">Select an item to view details.</span>";
-        detailStatus.textContent = "Idle";
+        setStatus(detailStatus, "Idle", false);
       };
       let nextCursor = null;
 
       const fetchItems = async (overrides = {}) => {
-        listStatus.textContent = "Loading...";
+        setStatus(listStatus, "Loading...", false);
         resetDetail();
         resultsSection.classList.remove("is-hidden");
         resultsMessage.textContent = "";
@@ -488,13 +500,17 @@
         const result = await request({ path });
 
         if (!result.ok) {
-          listStatus.textContent = `Error ${result.status}`;
+          const message =
+            result.status === "no_response" || result.status === "network_error"
+              ? "Error: server did not respond"
+              : `Error ${result.status}`;
+          setStatus(listStatus, message, true);
           renderItems(itemsList, []);
           resultsMessage.textContent = "We couldn’t load results. Please try again.";
           return;
         }
 
-        listStatus.textContent = `Loaded ${result.payload?.items?.length ?? 0} items`;
+        setStatus(listStatus, `Loaded ${result.payload?.items?.length ?? 0} items`, false);
         resultsMessage.textContent = "";
         const items = result.payload?.items || [];
         renderItems(itemsList, items);

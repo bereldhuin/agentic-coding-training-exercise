@@ -31,11 +31,22 @@ class SQLiteItemRepositoryTest {
     private lateinit var repository: SQLiteItemRepository
 
     @Before
-    fun setup() = runBlocking {
-        // Initialize in-memory database
-        System.setProperty("DATABASE_PATH", ":memory:")
-        DatabaseConfig.initializeSchema()
-        repository = SQLiteItemRepository()
+    fun setup() {
+        runBlocking {
+            DatabaseConfig.shutdown()
+            // Initialize in-memory database with unique name to avoid sharing between tests
+            System.setProperty("DATABASE_PATH", ":memory:?cache=shared")
+            DatabaseConfig.initializeSchema()
+            repository = SQLiteItemRepository()
+
+            // Clear any existing data
+            DatabaseConfig.withConnection { conn ->
+                conn.createStatement().use { stmt ->
+                    stmt.execute("DELETE FROM items_fts")
+                    stmt.execute("DELETE FROM items")
+                }
+            }
+        }
     }
 
     @After

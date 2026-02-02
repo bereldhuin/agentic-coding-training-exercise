@@ -50,21 +50,43 @@ go mod download
 
 ### Development Mode
 
-Run directly:
+Run directly (requires FTS5 build tag):
 ```bash
-go run cmd/server/main.go
+go run -tags fts5 cmd/server/main.go
+```
+
+Or use the Makefile:
+```bash
+make run
 ```
 
 ### Production Build
 
-Build the binary:
+Build the binary (requires FTS5 build tag for full-text search):
 ```bash
-go build -o bin/server cmd/server/main.go
+go build -tags fts5 -o bin/server cmd/server/main.go
+```
+
+Or use the Makefile:
+```bash
+make build
 ```
 
 Run the binary:
 ```bash
 ./bin/server
+```
+
+**Note**: The `-tags fts5` flag is required to enable SQLite FTS5 full-text search support. Without it, the search functionality will not work.
+
+## Makefile
+
+The project includes a Makefile for common tasks:
+
+```bash
+make build   # Build the server with FTS5 support
+make clean   # Remove built binaries
+make run     # Run the server with FTS5 support
 ```
 
 ## Configuration
@@ -86,6 +108,7 @@ Create a `.env` file to override defaults (see `.env.example`).
 
 ### Items
 - `GET /v1/items` - List items with filtering, sorting, pagination
+- `GET /v1/items/search` - Full-text search using FTS5 (requires `-tags fts5`)
 - `POST /v1/items` - Create a new item
 - `GET /v1/items/:id` - Get item by ID
 - `PUT /v1/items/:id` - Update item (full replacement)
@@ -94,14 +117,14 @@ Create a `.env` file to override defaults (see `.env.example`).
 
 ## Testing
 
-Run all tests:
+Run all tests (requires FTS5 build tag):
 ```bash
-go test ./... -v
+go test -tags fts5 ./... -v
 ```
 
 Run tests with coverage:
 ```bash
-go test -cover ./...
+go test -tags fts5 -cover ./...
 ```
 
 Generate coverage report:
@@ -157,9 +180,27 @@ All endpoints, schemas, validation rules, and error responses match the specific
 The server uses SQLite with the following features:
 
 - Shared database with other implementations (TypeScript, Python, Swift, Kotlin)
-- Full-text search using FTS5
+- **Full-text search using FTS5** (requires `-tags fts5` build flag)
 - Cursor-based pagination
 - JSON field for images array
+
+### FTS5 Full-Text Search
+
+This server uses SQLite's FTS5 extension for efficient full-text search on items. The search indexes the `title` and `description` fields.
+
+**Implementation Details**:
+- Virtual table: `items_fts` (auto-created on first run)
+- Triggers automatically sync the FTS5 table on INSERT/UPDATE/DELETE
+- Search uses `MATCH` operator with relevance ranking
+- Query terms are automatically escaped for safe FTS5 queries
+
+**Building with FTS5**:
+```bash
+# Required for full-text search to work
+go build -tags fts5 -o bin/server cmd/server/main.go
+```
+
+The `mattn/go-sqlite3` driver requires FTS5 to be explicitly enabled at compile time via build tags.
 
 ## Error Handling
 

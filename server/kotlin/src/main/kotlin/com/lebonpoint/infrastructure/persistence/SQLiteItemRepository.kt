@@ -22,6 +22,8 @@ import com.lebonpoint.shared.encodeCursor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import java.sql.Connection
+import java.sql.Types
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
@@ -86,31 +88,36 @@ class SQLiteItemRepository(
 
                 stmt.executeUpdate()
 
-                stmt.generatedKeys.use { keys ->
-                    if (keys.next()) {
-                        val id = keys.getInt(1)
-                        Item(
-                            id = id,
-                            title = data.title,
-                            description = data.description,
-                            priceCents = data.priceCents,
-                            category = data.category,
-                            condition = data.condition,
-                            status = data.status,
-                            isFeatured = data.isFeatured,
-                            city = data.city,
-                            postalCode = data.postalCode,
-                            country = data.country,
-                            deliveryAvailable = data.deliveryAvailable,
-                            createdAt = now,
-                            updatedAt = now,
-                            publishedAt = null,
-                            images = data.images
-                        )
-                    } else {
-                        throw IllegalStateException("Failed to get generated ID")
+                val generatedId = conn.createStatement().use { keyStmt ->
+                    keyStmt.executeQuery("SELECT last_insert_rowid()").use { rs ->
+                        if (rs.next()) {
+                            rs.getInt(1)
+                        } else {
+                            throw IllegalStateException("Failed to get generated ID")
+                        }
                     }
                 }
+
+                upsertFullTextIndex(conn = conn, id = generatedId, title = data.title, description = data.description)
+
+                Item(
+                    id = generatedId,
+                    title = data.title,
+                    description = data.description,
+                    priceCents = data.priceCents,
+                    category = data.category,
+                    condition = data.condition,
+                    status = data.status,
+                    isFeatured = data.isFeatured,
+                    city = data.city,
+                    postalCode = data.postalCode,
+                    country = data.country,
+                    deliveryAvailable = data.deliveryAvailable,
+                    createdAt = now,
+                    updatedAt = now,
+                    publishedAt = null,
+                    images = data.images
+                )
             }
         }
     }
@@ -213,7 +220,7 @@ class SQLiteItemRepository(
 
             conn.prepareStatement(sql).use { stmt ->
                 var paramIndex = 1
-                stmt.setString(paramIndex++, "\"$query\"") // FTS search term
+                stmt.setString(paramIndex++, query) // FTS search term
                 paramIndex = setFilterParameters(stmt, filters, paramIndex)
                 stmt.setInt(paramIndex, limit.coerceIn(1, 100))
 
@@ -261,7 +268,17 @@ class SQLiteItemRepository(
 
                 val rows = stmt.executeUpdate()
                 if (rows > 0) {
-                    findById(id)
+                    upsertFullTextIndex(conn = conn, id = id, title = data.title, description = data.description)
+                    conn.prepareStatement("SELECT * FROM items WHERE id = ?").use { selectStmt ->
+                        selectStmt.setInt(1, id)
+                        selectStmt.executeQuery().use { rs ->
+                            if (rs.next()) {
+                                mapRowToItem(rs)
+                            } else {
+                                null
+                            }
+                        }
+                    }
                 } else {
                     null
                 }
@@ -298,10 +315,8 @@ class SQLiteItemRepository(
                 return@withConnection existing
             }
 
-            setClauses.add("id = ?")
-            values.add(id)
-
             val sql = "UPDATE items SET ${setClauses.joinToString(", ")} WHERE id = ?"
+            values.add(id)
 
             conn.prepareStatement(sql).use { stmt ->
                 values.forEachIndexed { index, value ->
@@ -313,6 +328,7 @@ class SQLiteItemRepository(
                 }
 
                 stmt.executeUpdate()
+                upsertFullTextIndex(conn = conn, id = id, title = updated.title, description = updated.description)
             }
 
             updated
@@ -323,7 +339,11 @@ class SQLiteItemRepository(
         dbConfig.withConnection { conn ->
             conn.prepareStatement("DELETE FROM items WHERE id = ?").use { stmt ->
                 stmt.setInt(1, id)
-                stmt.executeUpdate() > 0
+                val deleted = stmt.executeUpdate() > 0
+                if (deleted) {
+                    deleteFullTextIndex(conn, id)
+                }
+                deleted
             }
         }
     }
@@ -406,6 +426,34 @@ class SQLiteItemRepository(
         filters.deliveryAvailable?.let { stmt.setInt(index++, if (it) 1 else 0) }
 
         return index
+    }
+
+    private fun upsertFullTextIndex(
+        conn: Connection,
+        id: Int,
+        title: String?,
+        description: String?
+    ) {
+        conn.prepareStatement("""
+            INSERT OR REPLACE INTO items_fts(rowid, title, description)
+            VALUES (?, ?, ?)
+        """.trimIndent()).use { stmt ->
+            stmt.setInt(1, id)
+            stmt.setString(2, title)
+            if (description != null) {
+                stmt.setString(3, description)
+            } else {
+                stmt.setNull(3, Types.VARCHAR)
+            }
+            stmt.executeUpdate()
+        }
+    }
+
+    private fun deleteFullTextIndex(conn: Connection, id: Int) {
+        conn.prepareStatement("DELETE FROM items_fts WHERE rowid = ?").use { stmt ->
+            stmt.setInt(1, id)
+            stmt.executeUpdate()
+        }
     }
 }
 

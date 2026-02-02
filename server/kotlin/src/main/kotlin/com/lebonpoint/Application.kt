@@ -43,6 +43,7 @@ fun Application.module() {
     // Install Koin for dependency injection
     install(Koin) {
         Level.INFO
+        allowOverride(true)
         modules(appModule)
     }
 

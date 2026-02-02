@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "db:init": "tsx ./scripts/db-init.ts",
-    "db:seed": "tsx ./scripts/db-seed.ts",
     "db:empty": "tsx ./scripts/db-empty.ts",
+    "db:seed": "tsx ./scripts/db-empty.ts && tsx ./scripts/db-init.ts && tsx ./scripts/db-seed.ts",
     "db:verify": "tsx ./scripts/db-verify.ts",
     "server:run": "node ./scripts/server-runner.js",
     "server:verify": "node ./scripts/server-runner.js --verify-api"

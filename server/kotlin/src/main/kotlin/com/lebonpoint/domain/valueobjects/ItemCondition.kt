@@ -1,5 +1,6 @@
 package com.lebonpoint.domain.valueobjects
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -8,11 +9,17 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 enum class ItemCondition {
+    @SerialName("new")
     NEW,
+    @SerialName("like_new")
     LIKE_NEW,
+    @SerialName("good")
     GOOD,
+    @SerialName("fair")
     FAIR,
+    @SerialName("parts")
     PARTS,
+    @SerialName("unknown")
     UNKNOWN;
 
     companion object {

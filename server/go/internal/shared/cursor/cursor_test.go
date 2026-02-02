@@ -125,7 +125,7 @@ func TestMustEncode(t *testing.T) {
 
 // Helper functions for testing
 func base64Encode(s string) string {
-	return "eyJpZCI6NDJ9" // Some invalid base64 for testing
+	return base64.StdEncoding.EncodeToString([]byte(s))
 }
 
 func encodeJSON(data interface{}) string {

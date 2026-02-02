@@ -1,5 +1,6 @@
 package com.lebonpoint.domain.valueobjects
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -8,10 +9,15 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 enum class ItemStatus {
+    @SerialName("draft")
     DRAFT,
+    @SerialName("active")
     ACTIVE,
+    @SerialName("reserved")
     RESERVED,
+    @SerialName("sold")
     SOLD,
+    @SerialName("archived")
     ARCHIVED;
 
     companion object {

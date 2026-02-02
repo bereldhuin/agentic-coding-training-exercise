@@ -20,7 +20,7 @@ const servers = [
     cwd: 'server/go',
     port: 8081,
     healthPath: HEALTH_PATH,
-    build: { command: 'go', args: ['build', '-o', 'bin/server', 'cmd/server/main.go'] },
+    build: { command: 'go', args: ['build', '-tags', 'fts5', '-o', 'bin/server', 'cmd/server/main.go'] },
     start: { command: './bin/server', args: [] },
     env: {},
   },

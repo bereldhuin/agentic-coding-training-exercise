@@ -24,7 +24,7 @@ data class ItemFilters(
  */
 data class SortOptions(
     val field: String = "created_at",
-    val direction: SortDirection = SortDirection.DESC
+    val direction: SortDirection = SortDirection.ASC
 )
 
 /**

@@ -485,10 +485,10 @@
         resultsMessage.textContent = "";
         const query = { ...readForm(listForm), ...overrides };
         if (query.min_price_cents !== undefined) {
-          query.min_price_cents = Math.round(query.min_price_cents) * 100;
+          query.min_price_cents = Math.trunc(query.min_price_cents * 100);
         }
         if (query.max_price_cents !== undefined) {
-          query.max_price_cents = Math.round(query.max_price_cents) * 100;
+          query.max_price_cents = Math.trunc(query.max_price_cents * 100);
         }
         const params = new URLSearchParams();
         Object.entries(query).forEach(([key, value]) => {

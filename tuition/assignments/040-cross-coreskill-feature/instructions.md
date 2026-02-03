@@ -43,6 +43,7 @@ The CLI must provide a composable search DSL that allows users to query the mark
 
 - Brainstorm the architecture and design before coding.
 - Use the **skills** we created in previous exercises to help you verify the quality of your implementation or improve your workflow.
+- Use other **skills** to debug your CLI output: `npx skills add https://github.com/viteinfinite/skills --skill request-recorder`
 - Use **skills** to **automate testing and debugging**: e.g., tell the agent to run the CLI and send testing requests.
 
 ---

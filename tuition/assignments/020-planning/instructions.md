@@ -12,6 +12,16 @@ Practice the **plan-then-act** workflow by implementing a new feature in the Leb
 
 ---
 
+### Feature Description
+
+Implement a "Warranty" field in the api endpoint that allows users to filter products based on warranty duration. The _current_ warranty options are:
+- No Warranty
+- 6 Months
+- 1 Year
+- 2 Years
+
+---
+
 ## Doc: Openspec
 
 0. Make sure the `.claude` folder exists in your project root
@@ -46,5 +56,5 @@ Practice the **plan-then-act** workflow by implementing a new feature in the Leb
 ### Hints
 
 - Optionally brainstorm, write and review the implementation plan. Provide the API documentation to the brainstorming or planning tool to ensure alignment with the existing contract
-- Review the plan _carefully_ before proceeding to implementation: **some things will most probably need adjustment or may be missing**
+- Review the plan _carefully_ before proceeding to implementation: **some things and edge cases will most probably need adjustment or may be missing**
   - ❓ Which ones?

@@ -14,33 +14,37 @@ Practice the **plan-then-act** workflow by implementing a new feature in the Leb
 
 ## Doc: Openspec
 
-1. `npm install -g openspec`
+0. Make sure the `.claude` folder exists in your project root
+1. `npm install -g @fission-ai/openspec@latest`
 2. `openspec init`
 3. Launch Claude
 4. Choose between:  
 
 ```
-/openspec:proposal - Create implementation plan
-/openspec:apply - Execute plan
+1. /opsx:new - Create implementation plan
+2. /opsx:ff <proposal-id> - Create the supporting documents
+3. /opsx:apply <proposal-id> - Execute plan
 ```
 
 ---
 
 ## Doc: Superpowers
+
+0. Make sure the `.claude` folder exists in your project root
 1. Install Skill from Skills.sh
     ```bash
-    npx skills add https://github.com/obra/superpowers --skill brainstorming \
-        writing-plans \
-        executing-plans \
-        test-driven-development \
-        finishing-a-development-branch
+    npx skills add https://github.com/obra/superpowers --skill brainstorming
     ```
-2. Launch Claude
-3. Find the skills using `/<skill-name>` commands.
+2. Restart claude
+3. Use the brainstorming skill to brainstorm on the price filter feature:
+    ```
+    /brainstorming
+    ```
 
 ---
 
 ### Hints
 
-- Optionally brainstorm, write and review the implementation plan. Provide the API documentation to the brainstorming or planning tool to ensure alignment with the existing contract.
-- Examine `[openapi.yaml](/server/api/openapi.yaml)` to understand the contract all servers must follow.
+- Optionally brainstorm, write and review the implementation plan. Provide the API documentation to the brainstorming or planning tool to ensure alignment with the existing contract
+- Review the plan _carefully_ before proceeding to implementation: **some things will most probably need adjustment or may be missing**
+  - ❓ Which ones?

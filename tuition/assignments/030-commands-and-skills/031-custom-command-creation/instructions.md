@@ -11,6 +11,11 @@ By the end, you will have a **skill** usable via **slash command** that produces
 ### Task
 
 Implement a new skill that generates _another Claude skill_.
+The new skill must:
+1. Be invocable via a **slash command** (e.g., `/new-skill`).
+2. Explore the current project structure and conventions to gather context necessary for generating a skill that fits well within the existing ecosystem.
+
+---
 
 #### Inputs
 

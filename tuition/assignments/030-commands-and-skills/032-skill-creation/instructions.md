@@ -4,9 +4,8 @@
 
 Use your `/new-skill` (or equivalent) command to generate **three reusable Claude skills** that will help you ship Lebonpoint features with higher reliability:
 
-1. **Test Runner**
+1. **Commit Style Enforcer** (enforce commit message conventions)
 2. **Project Consistency Verifier** (style/architecture/conventions)
-3. **Commit Style Enforcer** (enforce commit message conventions)
 
 ---
 
@@ -18,15 +17,14 @@ Use your `/new-skill` (or equivalent) command to generate **three reusable Claud
 
 ---
 
-## Skill 1: Test Runner
+## Skill 1: Commit Style Enforcer
 
-Your **Test Runner** skill must:
-
-* Run the tests (or the appropriate subset)
-* Capture output and summarize:
-  * failing tests
-  * error messages
-  * likely cause (if derivable from output)
+Your **Commit Style Enforcer** skill must:
+* Inspect the staged changes
+* Generate a commit message that adheres to the project's commit message conventions, including:
+  * tags within square brackets indicating affected components or areas of the codebase (e.g., `[api]`, `[ui]`, `[docs]`)
+  * A concise summary line (under 50 characters)
+  * A fairly detailed description of the changes
 
 ---
 
@@ -39,17 +37,6 @@ Your **Consistency Verifier** skill must:
   * naming patterns
   * architecture conventions
   * error-handling conventions
-  
----
-
-## Skill 3: Commit Style Enforcer
-
-Your **Commit Style Enforcer** skill must:
-* Inspect the staged changes
-* Generate a commit message that adheres to the project's commit message conventions, including:
-  * tags within square brackets indicating affected components or areas of the codebase (e.g., `[api]`, `[ui]`, `[docs]`)
-  * A concise summary line (under 50 characters)
-  * A fairly detailed description of the changes
 
 ---
 

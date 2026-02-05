@@ -36,22 +36,11 @@ Familiarize yourself with the Lebonpoint platform by reviewing the different bac
 
 ---
 
-#### Step 2: Claude Init
+#### Step 2: Claude.md / Agents.md Initialization
 
-Initialize Claude in the project directory to enable AI-assisted development:
+1. Write a comprehensive `CLAUDE.md` or `AGENTS.md` file that describes the overall architecture of the Lebonpoint project.
 
-```bash
-claude
-/init
-```
-
-This will allow Claude to index the multi-language structure and understand how the different components interact.
-
-Understand the project structure and the role of the different tiers:
-- backend
-- database
-- tests
-- client
+2. Add _another_ `CLAUDE.md` or `AGENTS.md` file in the `server/<your-stack>` directory that details the specific implementation of the backend you chose (e.g., TypeScript, Python, Go, Kotlin, Swift).
 
 ---
 

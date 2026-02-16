@@ -1,23 +1,23 @@
-## Exercise: Create a Lebonpoint Marketplace CLI - with an Unfamiliar Stack
+## Create a Lebonpoint Marketplace _CLI_ - with an Unfamiliar Stack
 
 ### Goal
 
-Expand your technical versatility by building a **CLI** that interacts with the **Lebonpoint platform** using a programming language or framework that is outside your comfort zone.
+Let's build a **CLI** that interacts with the **Lebonpoint platform** using a programming language or framework that is outside your comfort zone.
 
-By the end, you will have a functional **CLI** that provides a composable search interface for querying and managing marketplace items, proving that AI agents can help you bridge the gap into unfamiliar technology stacks while building useful tools.
+By the end, you will have a functional **CLI** that **provides a composable search interface** for querying marketplace items.
 
 ---
 
 ### Prerequisites
 
-* You have identified a "target" stack (e.g., Python, TypeScript, Go).
+* You have identified a target **UNFAMILIAR** stack (e.g., Python, TypeScript, Go).
 * You have the Lebonpoint backends running.
 
 ---
 
 ## The "Lebonpoint Marketplace CLI"
 
-Your task is to implement a CLI in your **target stack** that interacts with the Lebonpoint Items API or directly with the SQLite database.
+Your task is to implement a CLI in a **target unfamiliar stack** that interacts with the Lebonpoint Items API.
 
 The CLI must provide a composable search DSL that allows users to query the marketplace effectively.
 
@@ -59,4 +59,4 @@ layout: center
 
 Full specification available at:
 <br/>
-[hymaia/agentic-coding-training-exercise/issues/1](https://github.com/hymaia/agentic-coding-training-exercise/issues/1)
+[https://github.com/hymaia/agentic-coding-training-exercise/issues/1](https://github.com/hymaia/agentic-coding-training-exercise/issues/1)

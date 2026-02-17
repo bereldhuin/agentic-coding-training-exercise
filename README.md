@@ -13,18 +13,10 @@ Lebonpoint is a proof-of-concept application that implements a unified items API
 - **Kotlin**: Ktor implementation
 - **Swift**: Vapor implementation
 
-### Key Features
-- **Shared Database**: All implementations share a single SQLite database.
-- **Canonical API**: Defined via OpenAPI 3.0 specification.
-- **Cross-Server Verification**: Automated test suite that ensures all implementations behave identically.
-- **Server Dashboard**: A monitoring and control interface to manage the different server instances.
-- **Client SPA**: A simple web interface to interact with the API.
-
 ## Project Structure
 
 ```text
 ├── client/          # Frontend Single Page Application
-├── openspec/        # OpenAPI specs and project documentation
 ├── scripts/         # Shared utility scripts (DB init, seeding, runner)
 ├── server/          # Backend implementations
 │   ├── go/          # Go implementation
@@ -45,9 +37,9 @@ Lebonpoint is a proof-of-concept application that implements a unified items API
 ### Initial Setup
 
 Install root dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
 ### Running Servers
 You can use the interactive server runner to start specific implementations or verify them all:
@@ -61,9 +53,28 @@ To run the cross-server verification suite and ensure all implementations are co
 npm run verify
 ```
 
+## Database Scripts
+
+### Initialize Database
+
+```bash
+npm run db:init
+```
+
+### Seed Database
+
+```bash
+npm run db:seed
+```
+
+### Verify Database
+
+```bash
+npm run db:verify
+```
+
 ## Documentation
 More detailed documentation can be found in the following locations:
-- [API Specification](./server/api/openapi.yaml)
 - [Verification Guide](./server/README-verification.md)
 - [Project Specs](./openspec/specs/)
 

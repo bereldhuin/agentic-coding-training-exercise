@@ -45,6 +45,12 @@ class SortOptions:
     field: SortField = SortField.CREATED_AT
     direction: SortDirection = SortDirection.DESC
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.field, SortField):
+            self.field = SortField(self.field)
+        if not isinstance(self.direction, SortDirection):
+            self.direction = SortDirection(self.direction)
+
 
 @dataclass
 class PaginationOptions:

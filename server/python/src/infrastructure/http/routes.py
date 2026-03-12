@@ -1,7 +1,7 @@
 """FastAPI routes for items endpoints."""
 
 from typing import Any
-from fastapi import APIRouter, HTTPException, Query, status
+from fastapi import APIRouter, Query, status
 
 from ...application.use_cases import (
     CreateItemUseCase,
@@ -12,7 +12,6 @@ from ...application.use_cases import (
     DeleteItemUseCase,
 )
 from ...domain.repositories.item_repository import ItemRepository
-from ...shared.errors import ValidationError as AppValidationError, NotFoundError
 from .models import (
     ItemResponseModel,
     CreateItemRequestModel,
@@ -90,71 +89,41 @@ def create_items_router(repository: ItemRepository) -> APIRouter:
     )
     async def create_item(data: CreateItemRequestModel) -> ItemResponseModel:
         """Create a new item."""
-        try:
-            create_data = to_create_data(data)
-            item = await create_item_use_case.execute(create_data)
-            return to_response_model(item)
-        except (AppValidationError, NotFoundError) as e:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST if isinstance(e, AppValidationError) else status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": e.__class__.__name__.lower(), "message": e.message, "details": e.details}}
-            )
+        create_data = to_create_data(data)
+        item = await create_item_use_case.execute(create_data)
+        return to_response_model(item)
 
     @router.get("/{item_id}", response_model=ItemResponseModel, summary="Get an item by ID")
     async def get_item(item_id: int) -> ItemResponseModel:
         """Get a single item by ID."""
-        try:
-            item = await get_item_use_case.execute(item_id)
-            return to_response_model(item)
-        except (AppValidationError, NotFoundError) as e:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST if isinstance(e, AppValidationError) else status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": e.__class__.__name__.lower(), "message": e.message, "details": e.details}}
-            )
+        item = await get_item_use_case.execute(item_id)
+        return to_response_model(item)
 
     @router.put("/{item_id}", response_model=ItemResponseModel, summary="Update an item (full replace)")
     async def update_item(item_id: int, data: UpdateItemRequestModel) -> ItemResponseModel:
         """Update (replace) an item."""
-        try:
-            update_data = to_update_data(data)
-            item = await update_item_use_case.execute(item_id, update_data)
-            return to_response_model(item)
-        except (AppValidationError, NotFoundError) as e:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST if isinstance(e, AppValidationError) else status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": e.__class__.__name__.lower(), "message": e.message, "details": e.details}}
-            )
+        update_data = to_update_data(data)
+        item = await update_item_use_case.execute(item_id, update_data)
+        return to_response_model(item)
 
     @router.patch(
-        "{item_id}",
+        "/{item_id}",
         response_model=ItemResponseModel,
         summary="Partially update an item",
     )
     async def patch_item(item_id: int, data: PatchItemRequestModel) -> ItemResponseModel:
         """Partially update an item."""
-        try:
-            patch_data = to_patch_data(data)
-            item = await patch_item_use_case.execute(item_id, patch_data)
-            return to_response_model(item)
-        except (AppValidationError, NotFoundError) as e:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST if isinstance(e, AppValidationError) else status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": e.__class__.__name__.lower(), "message": e.message, "details": e.details}}
-            )
+        patch_data = to_patch_data(data)
+        item = await patch_item_use_case.execute(item_id, patch_data)
+        return to_response_model(item)
 
     @router.delete(
-        "{item_id}",
+        "/{item_id}",
         status_code=status.HTTP_204_NO_CONTENT,
         summary="Delete an item",
     )
     async def delete_item(item_id: int) -> None:
         """Delete an item."""
-        try:
-            await delete_item_use_case.execute(item_id)
-        except (AppValidationError, NotFoundError) as e:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST if isinstance(e, AppValidationError) else status.HTTP_404_NOT_FOUND,
-                detail={"error": {"code": e.__class__.__name__.lower(), "message": e.message, "details": e.details}}
-            )
+        await delete_item_use_case.execute(item_id)
 
     return router

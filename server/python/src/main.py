@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from fastapi import FastAPI, status, HTTPException
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
@@ -58,6 +59,7 @@ app.add_middleware(
 # Register exception handlers
 app.add_exception_handler(ValidationError, validation_error_handler)
 app.add_exception_handler(NotFoundError, not_found_error_handler)
+app.add_exception_handler(RequestValidationError, pydantic_validation_error_handler)
 app.add_exception_handler(PydanticValidationError, pydantic_validation_error_handler)
 app.add_exception_handler(Exception, generic_error_handler)
 

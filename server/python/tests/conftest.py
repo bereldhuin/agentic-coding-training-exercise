@@ -65,6 +65,24 @@ def in_memory_db() -> Generator[sqlite3.Connection, None, None]:
         )
     """)
 
+    # Create triggers to keep FTS index in sync
+    conn.execute("""
+        CREATE TRIGGER IF NOT EXISTS items_fts_insert AFTER INSERT ON items BEGIN
+            INSERT INTO items_fts(rowid, title, description) VALUES (new.id, new.title, new.description);
+        END
+    """)
+    conn.execute("""
+        CREATE TRIGGER IF NOT EXISTS items_fts_update AFTER UPDATE ON items BEGIN
+            INSERT INTO items_fts(items_fts, rowid, title, description) VALUES('delete', old.id, old.title, old.description);
+            INSERT INTO items_fts(rowid, title, description) VALUES (new.id, new.title, new.description);
+        END
+    """)
+    conn.execute("""
+        CREATE TRIGGER IF NOT EXISTS items_fts_delete AFTER DELETE ON items BEGIN
+            INSERT INTO items_fts(items_fts, rowid, title, description) VALUES('delete', old.id, old.title, old.description);
+        END
+    """)
+
     yield conn
 
     conn.close()
@@ -93,8 +111,14 @@ def test_repository(in_memory_db: sqlite3.Connection) -> SQLiteItemRepository:
     temp_conn = sqlite3.connect(str(temp_db))
     temp_conn.row_factory = sqlite3.Row
 
-    # Copy schema
-    for row in in_memory_db.execute("SELECT sql FROM sqlite_master WHERE sql IS NOT NULL"):
+    # Copy schema, excluding auto-created internal objects:
+    # - sqlite_sequence: internal AUTOINCREMENT tracking table
+    # - FTS shadow tables (type='table'): auto-created when the FTS virtual table is created
+    for row in in_memory_db.execute(
+        "SELECT sql FROM sqlite_master WHERE sql IS NOT NULL "
+        "AND name != 'sqlite_sequence' "
+        "AND NOT (type = 'table' AND name LIKE 'items_fts_%')"
+    ):
         temp_conn.execute(row[0])
 
     temp_conn.commit()

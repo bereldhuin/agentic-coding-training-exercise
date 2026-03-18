@@ -16,9 +16,9 @@ import java.time.Instant
  */
 @Serializable
 data class HealthResponse(
-    val status: String,
+    var status: String,
     @Serializable(with = InstantSerializer::class)
-    val timestamp: Instant = Instant.now()
+    var timestamp: Instant = Instant.now()
 )
 
 /**
@@ -26,22 +26,22 @@ data class HealthResponse(
  */
 @Serializable
 data class ItemResponse(
-    val id: Int,
-    val title: String,
-    val description: String? = null,
-    val price_cents: Int,
-    val category: String? = null,
-    val condition: ItemCondition,
-    val status: ItemStatus,
-    val is_featured: Boolean,
-    val city: String? = null,
-    val postal_code: String? = null,
-    val country: String,
-    val delivery_available: Boolean,
-    val created_at: String,
-    val updated_at: String,
-    val published_at: String? = null,
-    val images: List<ItemImageResponse> = emptyList()
+    var id: Int,
+    var title: String,
+    var description: String? = null,
+    var price_cents: Int,
+    var category: String? = null,
+    var condition: ItemCondition,
+    var status: ItemStatus,
+    var is_featured: Boolean,
+    var city: String? = null,
+    var postal_code: String? = null,
+    var country: String,
+    var delivery_available: Boolean,
+    var created_at: String,
+    var updated_at: String,
+    var published_at: String? = null,
+    var images: List<ItemImageResponse> = emptyList()
 )
 
 /**
@@ -49,9 +49,9 @@ data class ItemResponse(
  */
 @Serializable
 data class ItemImageResponse(
-    val url: String,
-    val alt: String? = null,
-    val sort_order: Int = 0
+    var url: String,
+    var alt: String? = null,
+    var sort_order: Int = 0
 )
 
 /**
@@ -59,8 +59,8 @@ data class ItemImageResponse(
  */
 @Serializable
 data class ListItemsResponse(
-    val items: List<ItemResponse>,
-    val next_cursor: String? = null
+    var items: List<ItemResponse>,
+    var next_cursor: String? = null
 )
 
 /**
@@ -68,18 +68,18 @@ data class ListItemsResponse(
  */
 @Serializable
 data class CreateItemRequest(
-    val title: String,
-    val description: String? = null,
-    val price_cents: Int,
-    val category: String? = null,
-    val condition: ItemCondition,
-    val status: ItemStatus = ItemStatus.DRAFT,
-    val is_featured: Boolean = false,
-    val city: String? = null,
-    val postal_code: String? = null,
-    val country: String = "FR",
-    val delivery_available: Boolean = false,
-    val images: List<ItemImageRequest> = emptyList()
+    var title: String,
+    var description: String? = null,
+    var price_cents: Int,
+    var category: String? = null,
+    var condition: ItemCondition,
+    var status: ItemStatus = ItemStatus.DRAFT,
+    var is_featured: Boolean = false,
+    var city: String? = null,
+    var postal_code: String? = null,
+    var country: String = "FR",
+    var delivery_available: Boolean = false,
+    var images: List<ItemImageRequest> = emptyList()
 )
 
 /**
@@ -87,9 +87,9 @@ data class CreateItemRequest(
  */
 @Serializable
 data class ItemImageRequest(
-    val url: String,
-    val alt: String? = null,
-    val sort_order: Int = 0
+    var url: String,
+    var alt: String? = null,
+    var sort_order: Int = 0
 )
 
 /**
@@ -97,18 +97,18 @@ data class ItemImageRequest(
  */
 @Serializable
 data class UpdateItemRequest(
-    val title: String,
-    val description: String? = null,
-    val price_cents: Int,
-    val category: String? = null,
-    val condition: ItemCondition,
-    val status: ItemStatus,
-    val is_featured: Boolean,
-    val city: String? = null,
-    val postal_code: String? = null,
-    val country: String,
-    val delivery_available: Boolean,
-    val images: List<ItemImageRequest> = emptyList()
+    var title: String,
+    var description: String? = null,
+    var price_cents: Int,
+    var category: String? = null,
+    var condition: ItemCondition,
+    var status: ItemStatus,
+    var is_featured: Boolean,
+    var city: String? = null,
+    var postal_code: String? = null,
+    var country: String,
+    var delivery_available: Boolean,
+    var images: List<ItemImageRequest> = emptyList()
 )
 
 /**
@@ -116,18 +116,18 @@ data class UpdateItemRequest(
  */
 @Serializable
 data class PatchItemRequest(
-    val title: String? = null,
-    val description: String? = null,
-    val price_cents: Int? = null,
-    val category: String? = null,
-    val condition: ItemCondition? = null,
-    val status: ItemStatus? = null,
-    val is_featured: Boolean? = null,
-    val city: String? = null,
-    val postal_code: String? = null,
-    val country: String? = null,
-    val delivery_available: Boolean? = null,
-    val images: List<ItemImageRequest>? = null
+    var title: String? = null,
+    var description: String? = null,
+    var price_cents: Int? = null,
+    var category: String? = null,
+    var condition: ItemCondition? = null,
+    var status: ItemStatus? = null,
+    var is_featured: Boolean? = null,
+    var city: String? = null,
+    var postal_code: String? = null,
+    var country: String? = null,
+    var delivery_available: Boolean? = null,
+    var images: List<ItemImageRequest>? = null
 )
 
 /**
@@ -135,7 +135,7 @@ data class PatchItemRequest(
  */
 @Serializable
 data class ErrorResponse(
-    val error: ErrorDetail
+    var error: ErrorDetail
 )
 
 /**
@@ -143,9 +143,9 @@ data class ErrorResponse(
  */
 @Serializable
 data class ErrorDetail(
-    val code: String,
-    val message: String,
-    val details: Map<String, String?> = emptyMap()
+    var code: String,
+    var message: String,
+    var details: Map<String, String?> = emptyMap()
 )
 
 /**

@@ -8,9 +8,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class ItemImage(
-    val url: String,
-    val alt: String? = null,
-    val sortOrder: Int = 0
+    var url: String,
+    var alt: String? = null,
+    var sortOrder: Int = 0
 )
 
 /**

@@ -12,25 +12,25 @@ import java.time.Instant
  */
 @Serializable
 data class Item(
-    val id: Int,
-    val title: String,
-    val description: String? = null,
-    val priceCents: Int,
-    val category: String? = null,
-    val condition: ItemCondition,
-    val status: ItemStatus,
-    val isFeatured: Boolean,
-    val city: String? = null,
-    val postalCode: String? = null,
-    val country: String,
-    val deliveryAvailable: Boolean,
+    var id: Int,
+    var title: String,
+    var description: String? = null,
+    var priceCents: Int,
+    var category: String? = null,
+    var condition: ItemCondition,
+    var status: ItemStatus,
+    var isFeatured: Boolean,
+    var city: String? = null,
+    var postalCode: String? = null,
+    var country: String,
+    var deliveryAvailable: Boolean,
     @Serializable(with = com.lebonpoint.shared.serializers.InstantSerializer::class)
-    val createdAt: Instant = Instant.now(),
+    var createdAt: Instant = Instant.now(),
     @Serializable(with = com.lebonpoint.shared.serializers.InstantSerializer::class)
-    val updatedAt: Instant = Instant.now(),
+    var updatedAt: Instant = Instant.now(),
     @Serializable(with = com.lebonpoint.shared.serializers.InstantSerializer::class)
-    val publishedAt: Instant? = null,
-    val images: List<ItemImage> = emptyList()
+    var publishedAt: Instant? = null,
+    var images: List<ItemImage> = emptyList()
 )
 
 /**
@@ -38,18 +38,18 @@ data class Item(
  */
 @Serializable
 data class CreateItemData(
-    val title: String,
-    val description: String? = null,
-    val priceCents: Int,
-    val category: String? = null,
-    val condition: ItemCondition,
-    val status: ItemStatus = ItemStatus.DRAFT,
-    val isFeatured: Boolean = false,
-    val city: String? = null,
-    val postalCode: String? = null,
-    val country: String = "FR",
-    val deliveryAvailable: Boolean = false,
-    val images: List<ItemImage> = emptyList()
+    var title: String,
+    var description: String? = null,
+    var priceCents: Int,
+    var category: String? = null,
+    var condition: ItemCondition,
+    var status: ItemStatus = ItemStatus.DRAFT,
+    var isFeatured: Boolean = false,
+    var city: String? = null,
+    var postalCode: String? = null,
+    var country: String = "FR",
+    var deliveryAvailable: Boolean = false,
+    var images: List<ItemImage> = emptyList()
 )
 
 /**
@@ -57,18 +57,18 @@ data class CreateItemData(
  */
 @Serializable
 data class ReplaceItemData(
-    val title: String,
-    val description: String? = null,
-    val priceCents: Int,
-    val category: String? = null,
-    val condition: ItemCondition,
-    val status: ItemStatus,
-    val isFeatured: Boolean,
-    val city: String? = null,
-    val postalCode: String? = null,
-    val country: String,
-    val deliveryAvailable: Boolean,
-    val images: List<ItemImage> = emptyList()
+    var title: String,
+    var description: String? = null,
+    var priceCents: Int,
+    var category: String? = null,
+    var condition: ItemCondition,
+    var status: ItemStatus,
+    var isFeatured: Boolean,
+    var city: String? = null,
+    var postalCode: String? = null,
+    var country: String,
+    var deliveryAvailable: Boolean,
+    var images: List<ItemImage> = emptyList()
 )
 
 /**
@@ -76,18 +76,18 @@ data class ReplaceItemData(
  */
 @Serializable
 data class PatchItemData(
-    val title: String? = null,
-    val description: String? = null,
-    val priceCents: Int? = null,
-    val category: String? = null,
-    val condition: ItemCondition? = null,
-    val status: ItemStatus? = null,
-    val isFeatured: Boolean? = null,
-    val city: String? = null,
-    val postalCode: String? = null,
-    val country: String? = null,
-    val deliveryAvailable: Boolean? = null,
-    val images: List<ItemImage>? = null
+    var title: String? = null,
+    var description: String? = null,
+    var priceCents: Int? = null,
+    var category: String? = null,
+    var condition: ItemCondition? = null,
+    var status: ItemStatus? = null,
+    var isFeatured: Boolean? = null,
+    var city: String? = null,
+    var postalCode: String? = null,
+    var country: String? = null,
+    var deliveryAvailable: Boolean? = null,
+    var images: List<ItemImage>? = null
 )
 
 /**

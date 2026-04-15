@@ -1,0 +1,82 @@
+{
+  "app": {
+    "pageTitle": "LeBonPoint Mercat",
+    "title": "LeBonPoint Mercat",
+    "subtitle": "Cercatz, filtratz e exploratz d'anoncis en temps real."
+  },
+  "language": {
+    "label": "Lenga"
+  },
+  "sections": {
+    "searchFilter": "Recerca e filtres",
+    "results": "Resultats",
+    "itemDetail": "Detalh de l'anonci"
+  },
+  "filters": {
+    "searchLabel": "Recerca",
+    "searchPlaceholder": "iPhone, canape, bicicleta",
+    "statusLabel": "Estatut",
+    "categoryLabel": "Categoria",
+    "minPriceLabel": "Prètz min (€)",
+    "maxPriceLabel": "Prètz max (€)",
+    "postalCodeLabel": "Còdi postal",
+    "postalPlaceholder": "67000",
+    "deliveryAvailableLabel": "Liurason disponibla"
+  },
+  "actions": {
+    "searchItems": "Recercar d'anoncis"
+  },
+  "common": {
+    "any": "Totes",
+    "true": "oc",
+    "false": "non"
+  },
+  "statusOptions": {
+    "draft": "borrolhon",
+    "active": "actiu",
+    "reserved": "reservat",
+    "sold": "vendut",
+    "archived": "arxivat"
+  },
+  "categoryOptions": {
+    "electronics": "electronica",
+    "furniture": "mobles",
+    "vehicles": "veïculs",
+    "home": "ostal",
+    "fashion": "mòda",
+    "services": "servicis",
+    "other": "autre"
+  },
+  "conditions": {
+    "new": "nòu",
+    "like_new": "coma nòu",
+    "good": "bon",
+    "fair": "corrècte",
+    "parts": "per pèças",
+    "unknown": "desconegut"
+  },
+  "messages": {
+    "listReady": "Prèst",
+    "listLoading": "Cargament...",
+    "itemsLoaded": "{{count}} anoncis cargats",
+    "detailLoading": "Cargament...",
+    "detailLoaded": "Cargat",
+    "detailIdle": "Inactiu",
+    "selectItem": "Seleccionatz un anonci per veire los detalhs.",
+    "unableToLoadItem": "Impossible de cargar l'anonci.",
+    "noItems": "Cap d'anonci trobat.",
+    "couldNotLoadResults": "Impossible de cargar los resultats. Tornatz ensajar.",
+    "errorServerNoResponse": "Error: lo servidor respond pas",
+    "errorHttp": "Error {{status}}",
+    "untitled": "Sens títol",
+    "noCategory": "(sens categoria)",
+    "priceLabel": "Prètz",
+    "deliveryLabel": "Liurason",
+    "deliveryAvailable": "Disponibla",
+    "deliveryNotAvailable": "Pas disponibla",
+    "noDescription": "Cap de descripcion provesida.",
+    "createdLabel": "Creat",
+    "updatedLabel": "Mes a jorn",
+    "noValue": "-"
+  }
+}

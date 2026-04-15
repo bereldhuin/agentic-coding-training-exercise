@@ -33,6 +33,24 @@
         border-bottom: 1px solid var(--border);
       }
 
+      .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .language-picker {
+        display: grid;
+        gap: 6px;
+        min-width: 180px;
+      }
+
+      .language-picker label {
+        font-size: 12px;
+      }
+
       h1 {
         margin: 0 0 8px;
         font-size: clamp(28px, 4vw, 44px);
@@ -217,66 +235,79 @@
   </head>
   <body>
     <header>
-      <h1>LeBonPoint Marketplace</h1>
-      <p class="muted">Search, filter, and explore marketplace items in real time.</p>
+      <div class="header-top">
+        <div>
+          <h1 data-i18n="app.title">LeBonPoint Marketplace</h1>
+          <p class="muted" data-i18n="app.subtitle">Search, filter, and explore marketplace items in real time.</p>
+        </div>
+        <div class="language-picker">
+          <label for="language-select" data-i18n="language.label">Language</label>
+          <select id="language-select" aria-label="Language selector">
+            <option value="en">English</option>
+            <option value="fr">Francais</option>
+            <option value="it">Italiano</option>
+            <option value="oc">Occitan</option>
+          </select>
+        </div>
+      </div>
     </header>
 
     <main>
       <section>
-        <h2>Search & Filter</h2>
+        <h2 data-i18n="sections.searchFilter">Search &amp; Filter</h2>
         <form id="list-form">
           <div class="grid">
             <label>
-              Search query
+              <span data-i18n="filters.searchLabel">Search query</span>
               <input name="q" placeholder="iPhone, sofa, bicycle" />
             </label>
             <label>
-              Status
+              <span data-i18n="filters.statusLabel">Status</span>
               <select name="status">
-                <option value="">Any</option>
-                <option value="draft">draft</option>
-                <option value="active">active</option>
-                <option value="reserved">reserved</option>
-                <option value="sold">sold</option>
-                <option value="archived">archived</option>
+                <option value="" data-i18n="common.any">Any</option>
+                <option value="draft" data-i18n="statusOptions.draft">draft</option>
+                <option value="active" data-i18n="statusOptions.active">active</option>
+                <option value="reserved" data-i18n="statusOptions.reserved">reserved</option>
+                <option value="sold" data-i18n="statusOptions.sold">sold</option>
+                <option value="archived" data-i18n="statusOptions.archived">archived</option>
               </select>
             </label>
             <label>
-              Category
+              <span data-i18n="filters.categoryLabel">Category</span>
               <select name="category">
-                <option value="">Any</option>
-                <option value="electronics">electronics</option>
-                <option value="furniture">furniture</option>
-                <option value="vehicles">vehicles</option>
-                <option value="home">home</option>
-                <option value="fashion">fashion</option>
-                <option value="services">services</option>
-                <option value="other">other</option>
+                <option value="" data-i18n="common.any">Any</option>
+                <option value="electronics" data-i18n="categoryOptions.electronics">electronics</option>
+                <option value="furniture" data-i18n="categoryOptions.furniture">furniture</option>
+                <option value="vehicles" data-i18n="categoryOptions.vehicles">vehicles</option>
+                <option value="home" data-i18n="categoryOptions.home">home</option>
+                <option value="fashion" data-i18n="categoryOptions.fashion">fashion</option>
+                <option value="services" data-i18n="categoryOptions.services">services</option>
+                <option value="other" data-i18n="categoryOptions.other">other</option>
               </select>
             </label>
             <label>
-              Min price (€)
+              <span data-i18n="filters.minPriceLabel">Min price (€)</span>
               <input name="min_price_cents" data-type="number" step="1" inputmode="numeric" />
             </label>
             <label>
-              Max price (€)
+              <span data-i18n="filters.maxPriceLabel">Max price (€)</span>
               <input name="max_price_cents" data-type="number" step="1" inputmode="numeric" />
             </label>
             <label>
-              Postal code
+              <span data-i18n="filters.postalCodeLabel">Postal code</span>
               <input name="postal_code" placeholder="67000" />
             </label>
             <label>
-              Delivery available
+              <span data-i18n="filters.deliveryAvailableLabel">Delivery available</span>
               <select name="delivery_available" data-type="boolean">
-                <option value="">Any</option>
-                <option value="true">true</option>
-                <option value="false">false</option>
+                <option value="" data-i18n="common.any">Any</option>
+                <option value="true" data-i18n="common.true">true</option>
+                <option value="false" data-i18n="common.false">false</option>
               </select>
             </label>
           </div>
           <div class="inline">
-            <button type="submit">Search items</button>
+            <button type="submit" data-i18n="actions.searchItems">Search items</button>
             <span class="muted" id="list-status">Ready</span>
           </div>
         </form>
@@ -286,13 +317,13 @@
         <div class="panel-row">
           <div>
             <div class="inline" style="justify-content: space-between;">
-              <h2>Results</h2>
+              <h2 data-i18n="sections.results">Results</h2>
               <span class="muted" id="results-message"></span>
             </div>
             <div class="items" id="items-list"></div>
           </div>
           <div>
-            <h2>Item Detail</h2>
+            <h2 data-i18n="sections.itemDetail">Item Detail</h2>
             <div class="detail" id="item-detail">
               <span class="muted">Select an item to view details.</span>
             </div>
@@ -304,6 +335,326 @@
 
     <script>
       const baseUrl = window.location.origin;
+      const DEFAULT_LANGUAGE = "en";
+      const SUPPORTED_LANGUAGES = ["en", "fr", "it", "oc"];
+      const translationCache = new Map();
+      const FALLBACK_TRANSLATIONS = {
+        en: {
+          app: {
+            pageTitle: "LeBonPoint Marketplace",
+            title: "LeBonPoint Marketplace",
+            subtitle: "Search, filter, and explore marketplace items in real time."
+          },
+          language: { label: "Language" },
+          sections: {
+            searchFilter: "Search & Filter",
+            results: "Results",
+            itemDetail: "Item Detail"
+          },
+          filters: {
+            searchLabel: "Search query",
+            searchPlaceholder: "iPhone, sofa, bicycle",
+            statusLabel: "Status",
+            categoryLabel: "Category",
+            minPriceLabel: "Min price (EUR)",
+            maxPriceLabel: "Max price (EUR)",
+            postalCodeLabel: "Postal code",
+            postalPlaceholder: "67000",
+            deliveryAvailableLabel: "Delivery available"
+          },
+          actions: { searchItems: "Search items" },
+          common: { any: "Any", true: "true", false: "false" },
+          statusOptions: {
+            draft: "draft",
+            active: "active",
+            reserved: "reserved",
+            sold: "sold",
+            archived: "archived"
+          },
+          categoryOptions: {
+            electronics: "electronics",
+            furniture: "furniture",
+            vehicles: "vehicles",
+            home: "home",
+            fashion: "fashion",
+            services: "services",
+            other: "other"
+          },
+          conditions: {
+            new: "new",
+            like_new: "like new",
+            good: "good",
+            fair: "fair",
+            parts: "for parts",
+            unknown: "unknown"
+          },
+          messages: {
+            listReady: "Ready",
+            listLoading: "Loading...",
+            itemsLoaded: "Loaded {{count}} items",
+            detailLoading: "Loading...",
+            detailLoaded: "Loaded",
+            detailIdle: "Idle",
+            selectItem: "Select an item to view details.",
+            unableToLoadItem: "Unable to load item.",
+            noItems: "No items found.",
+            couldNotLoadResults: "We couldn't load results. Please try again.",
+            errorServerNoResponse: "Error: server did not respond",
+            errorHttp: "Error {{status}}",
+            untitled: "Untitled",
+            noCategory: "(no category)",
+            priceLabel: "Price",
+            deliveryLabel: "Delivery",
+            deliveryAvailable: "Available",
+            deliveryNotAvailable: "Not available",
+            noDescription: "No description provided.",
+            createdLabel: "Created",
+            updatedLabel: "Updated",
+            noValue: "-"
+          }
+        },
+        fr: {
+          app: {
+            pageTitle: "LeBonPoint Marche",
+            title: "LeBonPoint Marche",
+            subtitle: "Recherchez, filtrez et explorez les annonces en temps reel."
+          },
+          language: { label: "Langue" },
+          sections: {
+            searchFilter: "Recherche et filtres",
+            results: "Resultats",
+            itemDetail: "Detail de l'annonce"
+          },
+          filters: {
+            searchLabel: "Recherche",
+            searchPlaceholder: "iPhone, canape, velo",
+            statusLabel: "Statut",
+            categoryLabel: "Categorie",
+            minPriceLabel: "Prix min (EUR)",
+            maxPriceLabel: "Prix max (EUR)",
+            postalCodeLabel: "Code postal",
+            postalPlaceholder: "67000",
+            deliveryAvailableLabel: "Livraison disponible"
+          },
+          actions: { searchItems: "Rechercher" },
+          common: { any: "Tous", true: "oui", false: "non" },
+          statusOptions: {
+            draft: "brouillon",
+            active: "active",
+            reserved: "reservee",
+            sold: "vendue",
+            archived: "archivee"
+          },
+          categoryOptions: {
+            electronics: "electronique",
+            furniture: "meubles",
+            vehicles: "vehicules",
+            home: "maison",
+            fashion: "mode",
+            services: "services",
+            other: "autre"
+          },
+          conditions: {
+            new: "neuf",
+            like_new: "comme neuf",
+            good: "bon etat",
+            fair: "etat correct",
+            parts: "pour pieces",
+            unknown: "inconnu"
+          },
+          messages: {
+            listReady: "Pret",
+            listLoading: "Chargement...",
+            itemsLoaded: "{{count}} annonces chargees",
+            detailLoading: "Chargement...",
+            detailLoaded: "Charge",
+            detailIdle: "Inactif",
+            selectItem: "Selectionnez une annonce pour voir les details.",
+            unableToLoadItem: "Impossible de charger l'annonce.",
+            noItems: "Aucune annonce trouvee.",
+            couldNotLoadResults: "Impossible de charger les resultats. Reessayez.",
+            errorServerNoResponse: "Erreur: le serveur ne repond pas",
+            errorHttp: "Erreur {{status}}",
+            untitled: "Sans titre",
+            noCategory: "(sans categorie)",
+            priceLabel: "Prix",
+            deliveryLabel: "Livraison",
+            deliveryAvailable: "Disponible",
+            deliveryNotAvailable: "Non disponible",
+            noDescription: "Aucune description fournie.",
+            createdLabel: "Cree",
+            updatedLabel: "Mis a jour",
+            noValue: "-"
+          }
+        },
+        it: {
+          app: {
+            pageTitle: "LeBonPoint Mercato",
+            title: "LeBonPoint Mercato",
+            subtitle: "Cerca, filtra ed esplora annunci in tempo reale."
+          },
+          language: { label: "Lingua" },
+          sections: {
+            searchFilter: "Ricerca e filtri",
+            results: "Risultati",
+            itemDetail: "Dettaglio annuncio"
+          },
+          filters: {
+            searchLabel: "Ricerca",
+            searchPlaceholder: "iPhone, divano, bicicletta",
+            statusLabel: "Stato",
+            categoryLabel: "Categoria",
+            minPriceLabel: "Prezzo min (EUR)",
+            maxPriceLabel: "Prezzo max (EUR)",
+            postalCodeLabel: "CAP",
+            postalPlaceholder: "67000",
+            deliveryAvailableLabel: "Consegna disponibile"
+          },
+          actions: { searchItems: "Cerca annunci" },
+          common: { any: "Qualsiasi", true: "si", false: "no" },
+          statusOptions: {
+            draft: "bozza",
+            active: "attivo",
+            reserved: "riservato",
+            sold: "venduto",
+            archived: "archiviato"
+          },
+          categoryOptions: {
+            electronics: "elettronica",
+            furniture: "arredamento",
+            vehicles: "veicoli",
+            home: "casa",
+            fashion: "moda",
+            services: "servizi",
+            other: "altro"
+          },
+          conditions: {
+            new: "nuovo",
+            like_new: "come nuovo",
+            good: "buono",
+            fair: "discreto",
+            parts: "per pezzi di ricambio",
+            unknown: "sconosciuto"
+          },
+          messages: {
+            listReady: "Pronto",
+            listLoading: "Caricamento...",
+            itemsLoaded: "{{count}} annunci caricati",
+            detailLoading: "Caricamento...",
+            detailLoaded: "Caricato",
+            detailIdle: "Inattivo",
+            selectItem: "Seleziona un annuncio per vedere i dettagli.",
+            unableToLoadItem: "Impossibile caricare l'annuncio.",
+            noItems: "Nessun annuncio trovato.",
+            couldNotLoadResults: "Impossibile caricare i risultati. Riprova.",
+            errorServerNoResponse: "Errore: il server non risponde",
+            errorHttp: "Errore {{status}}",
+            untitled: "Senza titolo",
+            noCategory: "(senza categoria)",
+            priceLabel: "Prezzo",
+            deliveryLabel: "Consegna",
+            deliveryAvailable: "Disponibile",
+            deliveryNotAvailable: "Non disponibile",
+            noDescription: "Nessuna descrizione disponibile.",
+            createdLabel: "Creato",
+            updatedLabel: "Aggiornato",
+            noValue: "-"
+          }
+        },
+        oc: {
+          app: {
+            pageTitle: "LeBonPoint Mercat",
+            title: "LeBonPoint Mercat",
+            subtitle: "Cercatz, filtratz e exploratz d'anoncis en temps real."
+          },
+          language: { label: "Lenga" },
+          sections: {
+            searchFilter: "Recerca e filtres",
+            results: "Resultats",
+            itemDetail: "Detalh de l'anonci"
+          },
+          filters: {
+            searchLabel: "Recerca",
+            searchPlaceholder: "iPhone, canape, bicicleta",
+            statusLabel: "Estatut",
+            categoryLabel: "Categoria",
+            minPriceLabel: "Pretz min (EUR)",
+            maxPriceLabel: "Pretz max (EUR)",
+            postalCodeLabel: "Codi postal",
+            postalPlaceholder: "67000",
+            deliveryAvailableLabel: "Liurason disponibla"
+          },
+          actions: { searchItems: "Recercar d'anoncis" },
+          common: { any: "Totes", true: "oc", false: "non" },
+          statusOptions: {
+            draft: "borrolhon",
+            active: "actiu",
+            reserved: "reservat",
+            sold: "vendut",
+            archived: "arxivat"
+          },
+          categoryOptions: {
+            electronics: "electronica",
+            furniture: "mobles",
+            vehicles: "veiculs",
+            home: "ostal",
+            fashion: "moda",
+            services: "servicis",
+            other: "autre"
+          },
+          conditions: {
+            new: "nou",
+            like_new: "coma nou",
+            good: "bon",
+            fair: "correcte",
+            parts: "per pecas",
+            unknown: "desconegut"
+          },
+          messages: {
+            listReady: "Prest",
+            listLoading: "Cargament...",
+            itemsLoaded: "{{count}} anoncis cargats",
+            detailLoading: "Cargament...",
+            detailLoaded: "Cargat",
+            detailIdle: "Inactiu",
+            selectItem: "Seleccionatz un anonci per veire los detalhs.",
+            unableToLoadItem: "Impossible de cargar l'anonci.",
+            noItems: "Cap d'anonci trobat.",
+            couldNotLoadResults: "Impossible de cargar los resultats. Tornatz ensajar.",
+            errorServerNoResponse: "Error: lo servidor respond pas",
+            errorHttp: "Error {{status}}",
+            untitled: "Sens titol",
+            noCategory: "(sens categoria)",
+            priceLabel: "Pretz",
+            deliveryLabel: "Liurason",
+            deliveryAvailable: "Disponibla",
+            deliveryNotAvailable: "Pas disponibla",
+            noDescription: "Cap de descripcion provesida.",
+            createdLabel: "Creat",
+            updatedLabel: "Mes a jorn",
+            noValue: "-"
+          }
+        }
+      };
+
+      const listForm = document.getElementById("list-form");
+      const languageSelect = document.getElementById("language-select");
+      const listStatus = document.getElementById("list-status");
+      const itemsList = document.getElementById("items-list");
+      const resultsSection = document.getElementById("results-section");
+      const resultsMessage = document.getElementById("results-message");
+      const detail = document.getElementById("item-detail");
+      const detailStatus = document.getElementById("detail-status");
+
+      let translations = {};
+      let currentLanguage = DEFAULT_LANGUAGE;
+      let nextCursor = null;
+      let lastItems = [];
+      let selectedItem = null;
+      let detailPlaceholderKey = "messages.selectItem";
+      let listStatusState = { key: "messages.listReady", params: {}, isError: false };
+      let detailStatusState = { key: "messages.detailIdle", params: {}, isError: false };
+      let resultsMessageState = { key: null, params: {} };
 
       const request = async ({ path, method = "GET", body }) => {
         const options = {
@@ -336,6 +687,134 @@
         };
       };
 
+      const getObjectPath = (obj, path) => {
+        return path.split(".").reduce((value, segment) => {
+          if (!value || typeof value !== "object") {
+            return undefined;
+          }
+          return value[segment];
+        }, obj);
+      };
+
+      const interpolate = (text, params = {}) => {
+        return String(text).replace(/\{\{\s*(\w+)\s*\}\}/g, (_, key) => {
+          return params[key] === undefined || params[key] === null ? "" : String(params[key]);
+        });
+      };
+
+      const t = (key, params = {}) => {
+        const raw = getObjectPath(translations, key);
+        if (typeof raw !== "string") {
+          return key;
+        }
+        return interpolate(raw, params);
+      };
+
+      const setStatus = (element, message, isError = false) => {
+        element.textContent = message;
+        element.classList.toggle("error", isError);
+      };
+
+      const setListStatus = (key, params = {}, isError = false) => {
+        listStatusState = { key, params, isError };
+        setStatus(listStatus, t(key, params), isError);
+      };
+
+      const setDetailStatus = (key, params = {}, isError = false) => {
+        detailStatusState = { key, params, isError };
+        setStatus(detailStatus, t(key, params), isError);
+      };
+
+      const setResultsMessage = (key = null, params = {}) => {
+        resultsMessageState = { key, params };
+        resultsMessage.textContent = key ? t(key, params) : "";
+      };
+
+      const refreshStatuses = () => {
+        setStatus(listStatus, t(listStatusState.key, listStatusState.params), listStatusState.isError);
+        setStatus(detailStatus, t(detailStatusState.key, detailStatusState.params), detailStatusState.isError);
+        resultsMessage.textContent = resultsMessageState.key
+          ? t(resultsMessageState.key, resultsMessageState.params)
+          : "";
+      };
+
+      const loadTranslations = async (lang) => {
+        if (translationCache.has(lang)) {
+          return translationCache.get(lang);
+        }
+
+        try {
+          const response = await fetch(`/i18n/${lang}.json`);
+          if (response.ok) {
+            const payload = await response.json();
+            translationCache.set(lang, payload);
+            return payload;
+          }
+        } catch (error) {
+          // Fall back to embedded dictionaries when the server does not expose static files.
+        }
+
+        const fallback = FALLBACK_TRANSLATIONS[lang] || FALLBACK_TRANSLATIONS[DEFAULT_LANGUAGE];
+        translationCache.set(lang, fallback);
+        return fallback;
+      };
+
+      const resolveInitialLanguage = () => {
+        const persisted = window.localStorage.getItem("lbp.language");
+        if (persisted && SUPPORTED_LANGUAGES.includes(persisted)) {
+          return persisted;
+        }
+
+        const browser = (window.navigator.language || DEFAULT_LANGUAGE).slice(0, 2).toLowerCase();
+        return SUPPORTED_LANGUAGES.includes(browser) ? browser : DEFAULT_LANGUAGE;
+      };
+
+      const localizeEnumValue = (groupKey, rawValue, fallback = "") => {
+        if (!rawValue) {
+          return fallback;
+        }
+
+        const normalized = String(rawValue).toLowerCase();
+        const translationKey = `${groupKey}.${normalized}`;
+        const translated = t(translationKey);
+        return translated === translationKey ? String(rawValue) : translated;
+      };
+
+      const applyStaticTranslations = () => {
+        document.documentElement.lang = currentLanguage;
+        document.title = t("app.pageTitle");
+
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+          const key = element.dataset.i18n;
+          element.textContent = t(key);
+        });
+
+        listForm.querySelector('input[name="q"]').placeholder = t("filters.searchPlaceholder");
+        listForm.querySelector('input[name="postal_code"]').placeholder = t("filters.postalPlaceholder");
+
+        if (selectedItem) {
+          renderDetail(selectedItem);
+        } else {
+          renderDetailPlaceholder();
+        }
+
+        if (!resultsSection.classList.contains("is-hidden")) {
+          renderItems(itemsList, lastItems);
+        }
+
+        refreshStatuses();
+      };
+
+      const setLanguage = async (lang) => {
+        const requested = SUPPORTED_LANGUAGES.includes(lang) ? lang : DEFAULT_LANGUAGE;
+        translations = await loadTranslations(requested);
+        currentLanguage = requested;
+
+        window.localStorage.setItem("lbp.language", currentLanguage);
+        languageSelect.value = currentLanguage;
+        applyStaticTranslations();
+      };
+
       const readForm = (form, { includeEmpty = false } = {}) => {
         const data = {};
         const fields = Array.from(form.querySelectorAll("input, select"));
@@ -365,47 +844,74 @@
 
       const formatPrice = (priceCents) => {
         if (priceCents === null || priceCents === undefined || Number.isNaN(priceCents)) {
-          return "-";
+          return t("messages.noValue");
         }
         const euros = Number(priceCents) / 100;
         return `€${euros.toFixed(2)}`;
       };
 
+      const renderDetailPlaceholder = () => {
+        detail.innerHTML = `<span class="muted">${t(detailPlaceholderKey)}</span>`;
+      };
+
       const loadDetail = async (id) => {
         if (!id) return;
-        setStatus(detailStatus, "Loading...", false);
+
+        setDetailStatus("messages.detailLoading");
         const result = await request({ path: `/v1/items/${id}` });
+
         if (!result.ok) {
           const message =
             result.status === "no_response" || result.status === "network_error"
-              ? "Error: server did not respond"
-              : `Error ${result.status}`;
+              ? t("messages.errorServerNoResponse")
+              : t("messages.errorHttp", { status: result.status });
           setStatus(detailStatus, message, true);
-          const detail = document.getElementById("item-detail");
-          detail.innerHTML = "<span class=\"muted\">Unable to load item.</span>";
+          detailStatusState = {
+            key: result.status === "no_response" || result.status === "network_error"
+              ? "messages.errorServerNoResponse"
+              : "messages.errorHttp",
+            params: result.status === "no_response" || result.status === "network_error" ? {} : { status: result.status },
+            isError: true
+          };
+          selectedItem = null;
+          detailPlaceholderKey = "messages.unableToLoadItem";
+          renderDetailPlaceholder();
           return;
         }
-        setStatus(detailStatus, "Loaded", false);
+
+        selectedItem = result.payload;
+        detailPlaceholderKey = "messages.selectItem";
+        setDetailStatus("messages.detailLoaded");
         renderDetail(result.payload);
       };
 
       const renderItems = (container, items) => {
         container.innerHTML = "";
-        if (!items || items.length === 0) {
-          container.innerHTML = "<span class=\"muted\">No items found.</span>";
+        lastItems = Array.isArray(items) ? items : [];
+
+        if (lastItems.length === 0) {
+          container.innerHTML = `<span class="muted">${t("messages.noItems")}</span>`;
           return;
         }
 
-        items.forEach((item) => {
+        lastItems.forEach((item) => {
           const card = document.createElement("div");
           card.className = "item-card";
+
+          const title = item.title ?? t("messages.untitled");
+          const category = item.category
+            ? localizeEnumValue("categoryOptions", item.category, String(item.category))
+            : t("messages.noCategory");
+          const condition = localizeEnumValue("conditions", item.condition, "");
+          const status = localizeEnumValue("statusOptions", item.status, "");
+
           card.innerHTML = `
             <div class="inline">
-              <span class="badge">#${item.id ?? "-"}</span>
-              <span class="item-title">${item.title ?? "Untitled"}</span>
+              <span class="badge">#${item.id ?? t("messages.noValue")}</span>
+              <span class="item-title">${title}</span>
             </div>
-            <div class="muted">${item.category ?? "(no category)"} · ${item.condition ?? ""} · ${item.status ?? ""}</div>
-            <div>Price: ${formatPrice(item.price_cents)}</div>
+            <div class="muted">${category} · ${condition} · ${status}</div>
+            <div>${t("messages.priceLabel")}: ${formatPrice(item.price_cents)}</div>
             <div class="muted">${item.city ?? ""} ${item.postal_code ?? ""} ${item.country ?? ""}</div>
           `;
 
@@ -418,32 +924,37 @@
       };
 
       const renderDetail = (item) => {
-        const detail = document.getElementById("item-detail");
         detail.innerHTML = "";
         const header = document.createElement("div");
         header.innerHTML = `
           <div class="inline">
-            <span class="badge">#${item.id ?? "-"}</span>
-            <h3>${item.title ?? "Untitled"}</h3>
+            <span class="badge">#${item.id ?? t("messages.noValue")}</span>
+            <h3>${item.title ?? t("messages.untitled")}</h3>
           </div>
         `;
+
+        const category = item.category
+          ? localizeEnumValue("categoryOptions", item.category, String(item.category))
+          : t("messages.noCategory");
+        const condition = localizeEnumValue("conditions", item.condition, "");
+        const status = localizeEnumValue("statusOptions", item.status, "");
 
         const meta = document.createElement("div");
         meta.className = "detail-list";
         meta.innerHTML = `
-          <div class="status">${item.status ?? ""}</div>
-          <div>${item.category ?? "(no category)"} · ${item.condition ?? ""}</div>
-          <div>Price: ${formatPrice(item.price_cents)}</div>
+          <div class="status">${status}</div>
+          <div>${category} · ${condition}</div>
+          <div>${t("messages.priceLabel")}: ${formatPrice(item.price_cents)}</div>
           <div>${item.city ?? ""} ${item.postal_code ?? ""} ${item.country ?? ""}</div>
-          <div>Delivery: ${item.delivery_available ? "Available" : "Not available"}</div>
+          <div>${t("messages.deliveryLabel")}: ${item.delivery_available ? t("messages.deliveryAvailable") : t("messages.deliveryNotAvailable")}</div>
         `;
 
         const description = document.createElement("div");
-        description.textContent = item.description || "No description provided.";
+        description.textContent = item.description || t("messages.noDescription");
 
         const timestamps = document.createElement("div");
         timestamps.className = "muted";
-        timestamps.textContent = `Created: ${item.created_at ?? ""} · Updated: ${item.updated_at ?? ""}`;
+        timestamps.textContent = `${t("messages.createdLabel")}: ${item.created_at ?? ""} · ${t("messages.updatedLabel")}: ${item.updated_at ?? ""}`;
 
         const images = document.createElement("div");
         images.className = "images";
@@ -461,28 +972,19 @@
         detail.appendChild(timestamps);
       };
 
-      const listForm = document.getElementById("list-form");
-      const listStatus = document.getElementById("list-status");
-      const itemsList = document.getElementById("items-list");
-      const resultsSection = document.getElementById("results-section");
-      const resultsMessage = document.getElementById("results-message");
-      const detailStatus = document.getElementById("detail-status");
-      const setStatus = (element, message, isError = false) => {
-        element.textContent = message;
-        element.classList.toggle("error", isError);
-      };
       const resetDetail = () => {
-        const detail = document.getElementById("item-detail");
-        detail.innerHTML = "<span class=\"muted\">Select an item to view details.</span>";
-        setStatus(detailStatus, "Idle", false);
+        selectedItem = null;
+        detailPlaceholderKey = "messages.selectItem";
+        renderDetailPlaceholder();
+        setDetailStatus("messages.detailIdle");
       };
-      let nextCursor = null;
 
       const fetchItems = async (overrides = {}) => {
-        setStatus(listStatus, "Loading...", false);
+        setListStatus("messages.listLoading");
         resetDetail();
         resultsSection.classList.remove("is-hidden");
-        resultsMessage.textContent = "";
+        setResultsMessage();
+
         const query = { ...readForm(listForm), ...overrides };
         if (query.min_price_cents !== undefined) {
           query.min_price_cents = Math.trunc(query.min_price_cents * 100);
@@ -490,6 +992,7 @@
         if (query.max_price_cents !== undefined) {
           query.max_price_cents = Math.trunc(query.max_price_cents * 100);
         }
+
         const params = new URLSearchParams();
         Object.entries(query).forEach(([key, value]) => {
           if (value === undefined || value === "") return;
@@ -500,19 +1003,21 @@
         const result = await request({ path });
 
         if (!result.ok) {
-          const message =
+          const messageKey =
             result.status === "no_response" || result.status === "network_error"
-              ? "Error: server did not respond"
-              : `Error ${result.status}`;
-          setStatus(listStatus, message, true);
+              ? "messages.errorServerNoResponse"
+              : "messages.errorHttp";
+          const messageParams =
+            messageKey === "messages.errorHttp" ? { status: result.status } : {};
+          setListStatus(messageKey, messageParams, true);
           renderItems(itemsList, []);
-          resultsMessage.textContent = "We couldn’t load results. Please try again.";
+          setResultsMessage("messages.couldNotLoadResults");
           return;
         }
 
-        setStatus(listStatus, `Loaded ${result.payload?.items?.length ?? 0} items`, false);
-        resultsMessage.textContent = "";
         const items = result.payload?.items || [];
+        setListStatus("messages.itemsLoaded", { count: items.length });
+        setResultsMessage();
         renderItems(itemsList, items);
         nextCursor = result.payload?.next_cursor ?? null;
       };
@@ -522,8 +1027,15 @@
         await fetchItems();
       });
 
+      languageSelect.addEventListener("change", async (event) => {
+        await setLanguage(event.target.value);
+      });
 
-      
+      (async () => {
+        await setLanguage(resolveInitialLanguage());
+        setListStatus("messages.listReady");
+        resetDetail();
+      })();
     </script>
   </body>
 </html>

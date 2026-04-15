@@ -1,0 +1,82 @@
+{
+  "app": {
+    "pageTitle": "LeBonPoint Mercato",
+    "title": "LeBonPoint Mercato",
+    "subtitle": "Cerca, filtra ed esplora annunci in tempo reale."
+  },
+  "language": {
+    "label": "Lingua"
+  },
+  "sections": {
+    "searchFilter": "Ricerca e filtri",
+    "results": "Risultati",
+    "itemDetail": "Dettaglio annuncio"
+  },
+  "filters": {
+    "searchLabel": "Ricerca",
+    "searchPlaceholder": "iPhone, divano, bicicletta",
+    "statusLabel": "Stato",
+    "categoryLabel": "Categoria",
+    "minPriceLabel": "Prezzo min (€)",
+    "maxPriceLabel": "Prezzo max (€)",
+    "postalCodeLabel": "CAP",
+    "postalPlaceholder": "67000",
+    "deliveryAvailableLabel": "Consegna disponibile"
+  },
+  "actions": {
+    "searchItems": "Cerca annunci"
+  },
+  "common": {
+    "any": "Qualsiasi",
+    "true": "si",
+    "false": "no"
+  },
+  "statusOptions": {
+    "draft": "bozza",
+    "active": "attivo",
+    "reserved": "riservato",
+    "sold": "venduto",
+    "archived": "archiviato"
+  },
+  "categoryOptions": {
+    "electronics": "elettronica",
+    "furniture": "arredamento",
+    "vehicles": "veicoli",
+    "home": "casa",
+    "fashion": "moda",
+    "services": "servizi",
+    "other": "altro"
+  },
+  "conditions": {
+    "new": "nuovo",
+    "like_new": "come nuovo",
+    "good": "buono",
+    "fair": "discreto",
+    "parts": "per pezzi di ricambio",
+    "unknown": "sconosciuto"
+  },
+  "messages": {
+    "listReady": "Pronto",
+    "listLoading": "Caricamento...",
+    "itemsLoaded": "{{count}} annunci caricati",
+    "detailLoading": "Caricamento...",
+    "detailLoaded": "Caricato",
+    "detailIdle": "Inattivo",
+    "selectItem": "Seleziona un annuncio per vedere i dettagli.",
+    "unableToLoadItem": "Impossibile caricare l'annuncio.",
+    "noItems": "Nessun annuncio trovato.",
+    "couldNotLoadResults": "Impossibile caricare i risultati. Riprova.",
+    "errorServerNoResponse": "Errore: il server non risponde",
+    "errorHttp": "Errore {{status}}",
+    "untitled": "Senza titolo",
+    "noCategory": "(senza categoria)",
+    "priceLabel": "Prezzo",
+    "deliveryLabel": "Consegna",
+    "deliveryAvailable": "Disponibile",
+    "deliveryNotAvailable": "Non disponibile",
+    "noDescription": "Nessuna descrizione disponibile.",
+    "createdLabel": "Creato",
+    "updatedLabel": "Aggiornato",
+    "noValue": "-"
+  }
+}

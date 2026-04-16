@@ -1,0 +1,31 @@
+{
+  "eval_id": 2,
+  "eval_name": "missing-french-keys",
+  "prompt": "J'ai ajouté quelques nouvelles clés dans le fichier en.json mais j'ai pas encore eu le temps de traduire en français. Tu peux checker ce qui manque et me proposer des traductions ? Les traductions sont dans ./client/i18n/",
+  "assertions": [
+    {
+      "name": "detects_missing_keys",
+      "description": "Should detect exactly 2 missing French keys: app.subtitle and messages.couldNotLoadResults"
+    },
+    {
+      "name": "proposes_translations",
+      "description": "Should propose 2-3 translation suggestions for each missing key with explanations"
+    },
+    {
+      "name": "interactive_validation",
+      "description": "Should present suggestions one at a time and wait for user validation before proceeding"
+    },
+    {
+      "name": "applies_translations",
+      "description": "Should correctly apply validated translations to fr.json file"
+    },
+    {
+      "name": "preserves_json_structure",
+      "description": "Updated fr.json should maintain proper JSON structure with correct indentation and UTF-8 encoding"
+    },
+    {
+      "name": "verifies_completion",
+      "description": "Should run verification again after updates to confirm all translations are now complete"
+    }
+  ]
+}

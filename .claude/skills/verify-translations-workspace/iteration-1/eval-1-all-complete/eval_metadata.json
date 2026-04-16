@@ -1,0 +1,23 @@
+{
+  "eval_id": 1,
+  "eval_name": "all-complete",
+  "prompt": "Salut, est-ce que tu peux vérifier que toutes nos traductions sont complètes dans le projet ? Je veux m'assurer qu'on n'a pas oublié des clés quelque part avant de déployer. Les fichiers de traduction sont dans client/i18n/",
+  "assertions": [
+    {
+      "name": "runs_verification_script",
+      "description": "Should execute the check_translations.py script to verify completeness"
+    },
+    {
+      "name": "reports_all_complete",
+      "description": "Should report that all translations are complete with a clear success message"
+    },
+    {
+      "name": "no_unnecessary_actions",
+      "description": "Should not propose translations or modify files since everything is complete"
+    },
+    {
+      "name": "clear_communication",
+      "description": "Should communicate the result clearly to the user in a concise way"
+    }
+  ]
+}

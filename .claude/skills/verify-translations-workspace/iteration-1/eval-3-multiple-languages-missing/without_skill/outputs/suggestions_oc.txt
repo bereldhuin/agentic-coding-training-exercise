@@ -1,0 +1,34 @@
+Occitan Translation Suggestions
+================================
+
+Missing Key 1: sections.itemDetail
+-----------------------------------
+English: "Item Detail"
+Suggested Occitan: "Detalh de l'anonci"
+
+Rationale:
+- "Detalh" = Detail (singular form, appropriate for section title)
+- "de l'anonci" = of the item/listing
+- Consistent with the naming pattern where "anonci" is used throughout the file for "item"
+- Follows Occitan grammatical structure with the definite article "l'"
+
+
+Missing Key 2: messages.noItems
+--------------------------------
+English: "No items found."
+Suggested Occitan: "Cap d'anonci trobat."
+
+Rationale:
+- "Cap d'anonci" = No items (literally "no item", Occitan uses singular after "cap")
+- "trobat" = found (past participle, masculine singular to agree with "anonci")
+- This structure is consistent with Occitan negation patterns
+- Follows the style of other message strings in the file
+
+
+COMPLETE ADDITIONS FOR oc.json:
+--------------------------------
+Add to "sections" section (after line 12):
+    "itemDetail": "Detalh de l'anonci"
+
+Add to "messages" section (after line 65, before "couldNotLoadResults"):
+    "noItems": "Cap d'anonci trobat.",

@@ -1,0 +1,38 @@
+Missing Translation Keys - Analysis Results
+===========================================
+
+Reference: English (en.json) - 81 lines, complete baseline
+
+ITALIAN (it.json) - Missing Keys:
+----------------------------------
+1. filters.deliveryAvailableLabel
+   - Present in English (line 24): "Delivery available"
+   - Missing in Italian file (line 23 is last filter entry: "postalPlaceholder")
+
+2. messages.selectItem
+   - Present in English (line 65): "Select an item to view details."
+   - Missing in Italian file (jumps from "detailIdle" line 63 to "unableToLoadItem" line 64)
+
+Total missing in Italian: 2 keys
+
+
+OCCITAN (oc.json) - Missing Keys:
+----------------------------------
+1. sections.itemDetail
+   - Present in English (line 13): "Item Detail"
+   - Missing in Occitan file (line 12 is last section entry: "results")
+
+2. messages.noItems
+   - Present in English (line 67): "No items found."
+   - Missing in Occitan file (jumps from "unableToLoadItem" line 65 to "couldNotLoadResults" line 66)
+
+Total missing in Occitan: 2 keys
+
+
+SUMMARY:
+--------
+- Italian: 2 missing keys (97.5% complete)
+- Occitan: 2 missing keys (97.5% complete)
+- Total issues found: 4 missing translation keys
+
+Both language files are mostly complete with only minor gaps in different areas.

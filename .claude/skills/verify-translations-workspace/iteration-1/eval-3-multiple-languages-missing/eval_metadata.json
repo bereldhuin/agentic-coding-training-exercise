@@ -1,0 +1,35 @@
+{
+  "eval_id": 3,
+  "eval_name": "multiple-languages-missing",
+  "prompt": "hey can you check our i18n files in client/i18n/ ? I think we're missing some translations in Italian and Occitan. If there are missing keys, suggest some translations and I'll validate them before you apply the changes.",
+  "assertions": [
+    {
+      "name": "detects_all_missing_keys",
+      "description": "Should detect missing keys in both Italian (2 keys) and Occitan (2 keys)"
+    },
+    {
+      "name": "language_appropriate_suggestions",
+      "description": "Should propose translations that are linguistically appropriate for each target language (Italian vs Occitan)"
+    },
+    {
+      "name": "handles_multiple_languages",
+      "description": "Should handle both languages systematically, not just one"
+    },
+    {
+      "name": "interactive_per_key",
+      "description": "Should present each missing key interactively for validation before applying"
+    },
+    {
+      "name": "updates_both_files",
+      "description": "Should correctly update both it.json and oc.json with validated translations"
+    },
+    {
+      "name": "preserves_structure_both",
+      "description": "Both updated files should maintain proper JSON structure and UTF-8 encoding"
+    },
+    {
+      "name": "final_verification",
+      "description": "Should verify that all translations are complete after updates"
+    }
+  ]
+}

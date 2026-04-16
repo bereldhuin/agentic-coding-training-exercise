@@ -1,0 +1,80 @@
+{
+  "app": {
+    "pageTitle": "LeBonPoint Marche",
+    "title": "LeBonPoint Marche"
+  },
+  "language": {
+    "label": "Langue"
+  },
+  "sections": {
+    "searchFilter": "Recherche et filtres",
+    "results": "Resultats",
+    "itemDetail": "Detail de l'annonce"
+  },
+  "filters": {
+    "searchLabel": "Recherche",
+    "searchPlaceholder": "iPhone, canape, velo",
+    "statusLabel": "Statut",
+    "categoryLabel": "Categorie",
+    "minPriceLabel": "Prix min (€)",
+    "maxPriceLabel": "Prix max (€)",
+    "postalCodeLabel": "Code postal",
+    "postalPlaceholder": "67000",
+    "deliveryAvailableLabel": "Livraison disponible"
+  },
+  "actions": {
+    "searchItems": "Rechercher"
+  },
+  "common": {
+    "any": "Tous",
+    "true": "oui",
+    "false": "non"
+  },
+  "statusOptions": {
+    "draft": "brouillon",
+    "active": "active",
+    "reserved": "reservee",
+    "sold": "vendue",
+    "archived": "archivee"
+  },
+  "categoryOptions": {
+    "electronics": "electronique",
+    "furniture": "meubles",
+    "vehicles": "vehicules",
+    "home": "maison",
+    "fashion": "mode",
+    "services": "services",
+    "other": "autre"
+  },
+  "conditions": {
+    "new": "neuf",
+    "like_new": "comme neuf",
+    "good": "bon etat",
+    "fair": "etat correct",
+    "parts": "pour pieces",
+    "unknown": "inconnu"
+  },
+  "messages": {
+    "listReady": "Pret",
+    "listLoading": "Chargement...",
+    "itemsLoaded": "{{count}} annonces chargees",
+    "detailLoading": "Chargement...",
+    "detailLoaded": "Charge",
+    "detailIdle": "Inactif",
+    "selectItem": "Selectionnez une annonce pour voir les details.",
+    "unableToLoadItem": "Impossible de charger l'annonce.",
+    "noItems": "Aucune annonce trouvee.",
+    "errorServerNoResponse": "Erreur: le serveur ne repond pas",
+    "errorHttp": "Erreur {{status}}",
+    "untitled": "Sans titre",
+    "noCategory": "(sans categorie)",
+    "priceLabel": "Prix",
+    "deliveryLabel": "Livraison",
+    "deliveryAvailable": "Disponible",
+    "deliveryNotAvailable": "Non disponible",
+    "noDescription": "Aucune description fournie.",
+    "createdLabel": "Cree",
+    "updatedLabel": "Mis a jour",
+    "noValue": "-"
+  }
+}

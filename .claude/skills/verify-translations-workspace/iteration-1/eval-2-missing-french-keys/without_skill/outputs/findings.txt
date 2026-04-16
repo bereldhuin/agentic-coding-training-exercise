@@ -1,0 +1,22 @@
+Missing French Translation Keys
+================================
+
+Total Missing Keys: 2
+
+Missing Keys Details:
+---------------------
+
+1. app.subtitle
+   English value: "Search, filter, and explore marketplace items in real time."
+   Location: Line 5 in en.json
+   Parent section: app
+
+2. messages.couldNotLoadResults
+   English value: "We couldn't load results. Please try again."
+   Location: Line 68 in en.json
+   Parent section: messages
+
+Summary:
+--------
+The French translation file (fr.json) is missing 2 keys that are present in the English file (en.json).
+Both missing keys are at the second level of nesting within their respective sections.

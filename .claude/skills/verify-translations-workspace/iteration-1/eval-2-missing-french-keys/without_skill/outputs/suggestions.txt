@@ -1,0 +1,28 @@
+Translation Suggestions for Missing Keys
+=========================================
+
+1. app.subtitle
+   English: "Search, filter, and explore marketplace items in real time."
+   Suggested French: "Recherchez, filtrez et explorez les annonces du marche en temps reel."
+
+   Alternative: "Recherchez, filtrez et decouvrez les articles du marche en temps reel."
+
+   Notes:
+   - "marketplace items" translated as "annonces du marche" (marketplace ads/listings)
+   - "real time" translated as "temps reel"
+   - Used formal "vous" form with imperative verbs
+
+2. messages.couldNotLoadResults
+   English: "We couldn't load results. Please try again."
+   Suggested French: "Nous n'avons pas pu charger les resultats. Veuillez reessayer."
+
+   Alternative: "Impossible de charger les resultats. Veuillez reessayer."
+
+   Notes:
+   - "We couldn't" translated as "Nous n'avons pas pu" (formal, polite)
+   - Alternative uses impersonal form "Impossible de" (more concise)
+   - "Please try again" translated as "Veuillez reessayer" (formal/polite request)
+
+Implementation Note:
+--------------------
+Add these keys to fr.json in their respective sections to match the structure of en.json.

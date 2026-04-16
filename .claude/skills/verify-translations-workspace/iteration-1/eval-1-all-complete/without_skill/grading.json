@@ -1,0 +1,20 @@
+{
+  "expectations": [
+    {
+      "text": "Detects all translations are complete",
+      "passed": true,
+      "evidence": "Agent performed manual key-by-key verification and confirmed all 59 keys present in all languages"
+    },
+    {
+      "text": "Provides clear result",
+      "passed": true,
+      "evidence": "Detailed verification report with key-by-key analysis"
+    },
+    {
+      "text": "Efficiency",
+      "passed": false,
+      "evidence": "Manual verification took 52s vs expected ~20s with script"
+    }
+  ],
+  "overall_pass": true
+}

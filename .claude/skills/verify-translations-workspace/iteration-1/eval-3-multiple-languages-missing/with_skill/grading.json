@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Should detect missing keys in both Italian (2 keys) and Occitan (2 keys)",
+      "passed": true,
+      "evidence": "Agent detected filters.deliveryAvailableLabel and messages.selectItem for Italian, messages.noItems and sections.itemDetail for Occitan"
+    },
+    {
+      "text": "Should propose translations that are linguistically appropriate for each target language",
+      "passed": true,
+      "evidence": "Agent provided 3 contextual Italian translations with explanations"
+    },
+    {
+      "text": "Should handle both languages systematically",
+      "passed": true,
+      "evidence": "Agent listed both languages' missing keys and started with Italian"
+    },
+    {
+      "text": "Should present each missing key interactively for validation",
+      "passed": true,
+      "evidence": "Agent presented first Italian key interactively with question 'Quelle traduction souhaitez-vous utiliser ?'"
+    },
+    {
+      "text": "Should correctly update both it.json and oc.json with validated translations",
+      "passed": false,
+      "evidence": "Workflow did not complete due to missing interactive responses in test"
+    },
+    {
+      "text": "Both updated files should maintain proper JSON structure",
+      "passed": false,
+      "evidence": "No updated files were created"
+    },
+    {
+      "text": "Should verify that all translations are complete after updates",
+      "passed": false,
+      "evidence": "Did not reach final verification step"
+    }
+  ],
+  "overall_pass": false
+}

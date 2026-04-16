@@ -1,0 +1,82 @@
+{
+  "app": {
+    "pageTitle": "LeBonPoint Marketplace",
+    "title": "LeBonPoint Marketplace",
+    "subtitle": "Search, filter, and explore marketplace items in real time."
+  },
+  "language": {
+    "label": "Language"
+  },
+  "sections": {
+    "searchFilter": "Search & Filter",
+    "results": "Results",
+    "itemDetail": "Item Detail"
+  },
+  "filters": {
+    "searchLabel": "Search query",
+    "searchPlaceholder": "iPhone, sofa, bicycle",
+    "statusLabel": "Status",
+    "categoryLabel": "Category",
+    "minPriceLabel": "Min price (€)",
+    "maxPriceLabel": "Max price (€)",
+    "postalCodeLabel": "Postal code",
+    "postalPlaceholder": "67000",
+    "deliveryAvailableLabel": "Delivery available"
+  },
+  "actions": {
+    "searchItems": "Search items"
+  },
+  "common": {
+    "any": "Any",
+    "true": "true",
+    "false": "false"
+  },
+  "statusOptions": {
+    "draft": "draft",
+    "active": "active",
+    "reserved": "reserved",
+    "sold": "sold",
+    "archived": "archived"
+  },
+  "categoryOptions": {
+    "electronics": "electronics",
+    "furniture": "furniture",
+    "vehicles": "vehicles",
+    "home": "home",
+    "fashion": "fashion",
+    "services": "services",
+    "other": "other"
+  },
+  "conditions": {
+    "new": "new",
+    "like_new": "like new",
+    "good": "good",
+    "fair": "fair",
+    "parts": "for parts",
+    "unknown": "unknown"
+  },
+  "messages": {
+    "listReady": "Ready",
+    "listLoading": "Loading...",
+    "itemsLoaded": "Loaded {{count}} items",
+    "detailLoading": "Loading...",
+    "detailLoaded": "Loaded",
+    "detailIdle": "Idle",
+    "selectItem": "Select an item to view details.",
+    "unableToLoadItem": "Unable to load item.",
+    "noItems": "No items found.",
+    "couldNotLoadResults": "We couldn't load results. Please try again.",
+    "errorServerNoResponse": "Error: server did not respond",
+    "errorHttp": "Error {{status}}",
+    "untitled": "Untitled",
+    "noCategory": "(no category)",
+    "priceLabel": "Price",
+    "deliveryLabel": "Delivery",
+    "deliveryAvailable": "Available",
+    "deliveryNotAvailable": "Not available",
+    "noDescription": "No description provided.",
+    "createdLabel": "Created",
+    "updatedLabel": "Updated",
+    "noValue": "-"
+  }
+}

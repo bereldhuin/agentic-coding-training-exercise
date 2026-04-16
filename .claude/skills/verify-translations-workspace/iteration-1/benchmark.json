@@ -1,0 +1,116 @@
+{
+  "skill_name": "verify-translations",
+  "iteration": 1,
+  "timestamp": "2026-04-16",
+  "configurations": [
+    {
+      "name": "with_skill",
+      "display_name": "With verify-translations skill",
+      "results": {
+        "pass_rate": {
+          "mean": 0.583,
+          "std": 0.289,
+          "raw_values": [1.0, 0.333, 0.429],
+          "display": "58.3% ± 28.9%"
+        },
+        "duration_seconds": {
+          "mean": 33.39,
+          "std": 18.97,
+          "raw_values": [56.505, 20.97, 22.695],
+          "display": "33.4s ± 19.0s"
+        },
+        "total_tokens": {
+          "mean": 16695,
+          "std": 1386,
+          "raw_values": [18384, 15317, 16383],
+          "display": "16695 ± 1386"
+        }
+      }
+    },
+    {
+      "name": "without_skill",
+      "display_name": "Without skill (baseline)",
+      "results": {
+        "pass_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "raw_values": [1.0, 1.0, 1.0],
+          "display": "100.0% ± 0.0%"
+        },
+        "duration_seconds": {
+          "mean": 48.71,
+          "std": 9.81,
+          "raw_values": [52.032, 35.473, 58.632],
+          "display": "48.7s ± 9.8s"
+        },
+        "total_tokens": {
+          "mean": 15639,
+          "std": 1438,
+          "raw_values": [17290, 13844, 15784],
+          "display": "15639 ± 1438"
+        }
+      }
+    }
+  ],
+  "deltas": {
+    "pass_rate": {
+      "absolute": -0.417,
+      "relative": -0.417,
+      "display": "-41.7%"
+    },
+    "duration_seconds": {
+      "absolute": -15.32,
+      "relative": -0.314,
+      "display": "-15.3s (-31.4% faster)"
+    },
+    "total_tokens": {
+      "absolute": 1056,
+      "relative": 0.068,
+      "display": "+1056 (+6.8%)"
+    }
+  },
+  "per_eval_breakdown": [
+    {
+      "eval_id": 1,
+      "eval_name": "all-complete",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "duration_seconds": 56.505,
+        "total_tokens": 18384
+      },
+      "without_skill": {
+        "pass_rate": 1.0,
+        "duration_seconds": 52.032,
+        "total_tokens": 17290
+      }
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "missing-french-keys",
+      "with_skill": {
+        "pass_rate": 0.333,
+        "duration_seconds": 20.97,
+        "total_tokens": 15317
+      },
+      "without_skill": {
+        "pass_rate": 1.0,
+        "duration_seconds": 35.473,
+        "total_tokens": 13844
+      }
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "multiple-languages-missing",
+      "with_skill": {
+        "pass_rate": 0.429,
+        "duration_seconds": 22.695,
+        "total_tokens": 16383
+      },
+      "without_skill": {
+        "pass_rate": 1.0,
+        "duration_seconds": 58.632,
+        "total_tokens": 15784
+      }
+    }
+  ]
+}

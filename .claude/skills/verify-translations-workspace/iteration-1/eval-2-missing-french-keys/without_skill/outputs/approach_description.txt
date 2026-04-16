@@ -1,0 +1,23 @@
+Approach to Finding Missing French Translation Keys
+=====================================================
+
+Method:
+-------
+1. Read both i18n files (en.json and fr.json) completely
+2. Manually compared the structure and keys between both files
+3. Identified keys present in English but absent in French by:
+   - Going through each top-level section (app, language, sections, filters, actions, common, statusOptions, categoryOptions, conditions, messages)
+   - Comparing nested keys within each section
+   - Noting which keys exist in en.json but not in fr.json
+
+Comparison Strategy:
+-------------------
+- Systematically reviewed each section level by level
+- Checked for both missing sections and missing keys within sections
+- Verified the nesting depth matches between files
+- Identified discrepancies in key presence
+
+Tools Used:
+-----------
+- Read tool to examine both JSON files
+- Manual structural comparison of the JSON hierarchies

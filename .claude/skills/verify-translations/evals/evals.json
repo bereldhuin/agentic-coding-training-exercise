@@ -1,0 +1,33 @@
+{
+  "skill_name": "verify-translations",
+  "evals": [
+    {
+      "id": 1,
+      "name": "all-complete",
+      "prompt": "Salut, est-ce que tu peux vérifier que toutes nos traductions sont complètes dans le projet ? Je veux m'assurer qu'on n'a pas oublié des clés quelque part avant de déployer. Les fichiers de traduction sont dans client/i18n/",
+      "expected_output": "Should run the verification script and report that all translations are complete (since the current files are complete)",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "missing-french-keys",
+      "prompt": "J'ai ajouté quelques nouvelles clés dans le fichier en.json mais j'ai pas encore eu le temps de traduire en français. Tu peux checker ce qui manque et me proposer des traductions ? Les traductions sont dans ./client/i18n/",
+      "expected_output": "Should detect missing French translations, propose 2-3 suggestions for each missing key with explanations, and wait for user validation before applying changes",
+      "files": [
+        "client/i18n/en.json",
+        "client/i18n/fr.json"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "multiple-languages-missing",
+      "prompt": "hey can you check our i18n files in client/i18n/ ? I think we're missing some translations in Italian and Occitan. If there are missing keys, suggest some translations and I'll validate them before you apply the changes.",
+      "expected_output": "Should find missing translations in it.json and oc.json, propose contextually appropriate suggestions for each language considering their linguistic characteristics, present them interactively for validation, and apply approved translations",
+      "files": [
+        "client/i18n/en.json",
+        "client/i18n/it.json",
+        "client/i18n/oc.json"
+      ]
+    }
+  ]
+}

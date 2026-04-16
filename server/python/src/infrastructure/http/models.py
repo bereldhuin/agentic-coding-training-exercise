@@ -29,6 +29,7 @@ class ItemResponseModel(BaseModel):
     postal_code: str | None
     country: str
     delivery_available: bool
+    garantie_months: int | None = Field(None, ge=0)
     created_at: str
     updated_at: str
     published_at: str | None
@@ -49,6 +50,7 @@ class CreateItemRequestModel(BaseModel):
     postal_code: str | None = None
     country: str = "FR"
     delivery_available: bool = False
+    garantie_months: int | None = Field(None, ge=0)
     images: list[ItemImageModel] = Field(default_factory=list)
 
 
@@ -66,6 +68,7 @@ class UpdateItemRequestModel(BaseModel):
     postal_code: str | None = None
     country: str
     delivery_available: bool
+    garantie_months: int | None = Field(None, ge=0)
     images: list[ItemImageModel] = Field(default_factory=list)
 
 
@@ -83,6 +86,7 @@ class PatchItemRequestModel(BaseModel):
     postal_code: str | None = None
     country: str | None = None
     delivery_available: bool | None = None
+    garantie_months: int | None = Field(None, ge=0)
     images: list[ItemImageModel] | None = None
 
 
@@ -148,6 +152,7 @@ def to_response_model(item: Any) -> ItemResponseModel:
             postal_code=item.postal_code,
             country=item.country,
             delivery_available=item.delivery_available,
+            garantie_months=item.garantie_months,
             created_at=item.created_at,
             updated_at=item.updated_at,
             published_at=item.published_at,
@@ -194,6 +199,7 @@ def to_create_data(model: CreateItemRequestModel) -> Any:
         postal_code=model.postal_code,
         country=model.country,
         delivery_available=model.delivery_available,
+        garantie_months=model.garantie_months,
         images=images,
     )
 
@@ -236,6 +242,7 @@ def to_update_data(model: UpdateItemRequestModel) -> Any:
         postal_code=model.postal_code,
         country=model.country,
         delivery_available=model.delivery_available,
+        garantie_months=model.garantie_months,
         images=images,
     )
 
@@ -276,5 +283,6 @@ def to_patch_data(model: PatchItemRequestModel) -> Any:
         postal_code=model.postal_code,
         country=model.country,
         delivery_available=model.delivery_available,
+        garantie_months=model.garantie_months,
         images=images,
     )

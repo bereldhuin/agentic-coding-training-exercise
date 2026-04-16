@@ -306,6 +306,16 @@
                 <option value="false" data-i18n="common.false">false</option>
               </select>
             </label>
+            <label>
+              <span data-i18n="filters.garantieLabel">Warranty</span>
+              <select name="garantie_months" data-type="number">
+                <option value="" data-i18n="common.any">Any</option>
+                <option value="0" data-i18n="garantieOptions.none">No warranty</option>
+                <option value="6" data-i18n="garantieOptions.6_months">6 months</option>
+                <option value="12" data-i18n="garantieOptions.1_year">1 year</option>
+                <option value="24" data-i18n="garantieOptions.2_years">2 years</option>
+              </select>
+            </label>
           </div>
           <div class="inline">
             <button type="submit" data-i18n="actions.searchItems">Search items</button>
@@ -361,7 +371,8 @@
             maxPriceLabel: "Max price (EUR)",
             postalCodeLabel: "Postal code",
             postalPlaceholder: "67000",
-            deliveryAvailableLabel: "Delivery available"
+            deliveryAvailableLabel: "Delivery available",
+            garantieLabel: "Warranty"
           },
           actions: { searchItems: "Search items" },
           common: { any: "Any", true: "true", false: "false" },
@@ -380,6 +391,12 @@
             fashion: "fashion",
             services: "services",
             other: "other"
+          },
+          garantieOptions: {
+            none: "no warranty",
+            "6_months": "6 months",
+            "1_year": "1 year",
+            "2_years": "2 years"
           },
           conditions: {
             new: "new",
@@ -435,7 +452,8 @@
             maxPriceLabel: "Prix max (EUR)",
             postalCodeLabel: "Code postal",
             postalPlaceholder: "67000",
-            deliveryAvailableLabel: "Livraison disponible"
+            deliveryAvailableLabel: "Livraison disponible",
+            garantieLabel: "Garantie"
           },
           actions: { searchItems: "Rechercher" },
           common: { any: "Tous", true: "oui", false: "non" },
@@ -454,6 +472,12 @@
             fashion: "mode",
             services: "services",
             other: "autre"
+          },
+          garantieOptions: {
+            none: "aucune garantie",
+            "6_months": "6 mois",
+            "1_year": "1 an",
+            "2_years": "2 ans"
           },
           conditions: {
             new: "neuf",
@@ -509,7 +533,8 @@
             maxPriceLabel: "Prezzo max (EUR)",
             postalCodeLabel: "CAP",
             postalPlaceholder: "67000",
-            deliveryAvailableLabel: "Consegna disponibile"
+            deliveryAvailableLabel: "Consegna disponibile",
+            garantieLabel: "Garanzia"
           },
           actions: { searchItems: "Cerca annunci" },
           common: { any: "Qualsiasi", true: "si", false: "no" },
@@ -528,6 +553,12 @@
             fashion: "moda",
             services: "servizi",
             other: "altro"
+          },
+          garantieOptions: {
+            none: "nessuna garanzia",
+            "6_months": "6 mesi",
+            "1_year": "1 anno",
+            "2_years": "2 anni"
           },
           conditions: {
             new: "nuovo",
@@ -583,7 +614,8 @@
             maxPriceLabel: "Pretz max (EUR)",
             postalCodeLabel: "Codi postal",
             postalPlaceholder: "67000",
-            deliveryAvailableLabel: "Liurason disponibla"
+            deliveryAvailableLabel: "Liurason disponibla",
+            garantieLabel: "Garantida"
           },
           actions: { searchItems: "Recercar d'anoncis" },
           common: { any: "Totes", true: "oc", false: "non" },
@@ -602,6 +634,12 @@
             fashion: "moda",
             services: "servicis",
             other: "autre"
+          },
+          garantieOptions: {
+            none: "cap de garantida",
+            "6_months": "6 meses",
+            "1_year": "1 an",
+            "2_years": "2 ans"
           },
           conditions: {
             new: "nou",

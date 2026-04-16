@@ -62,8 +62,8 @@ class SQLiteItemRepository(ItemRepository):
                 INSERT INTO items (
                     title, description, price_cents, category, condition, status,
                     is_featured, city, postal_code, country, delivery_available,
-                    images, created_at, updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    garantie_months, images, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     data.title,
@@ -77,6 +77,7 @@ class SQLiteItemRepository(ItemRepository):
                     data.postal_code,
                     data.country,
                     1 if data.delivery_available else 0,
+                    data.garantie_months,
                     images_json,
                     now,
                     now,
@@ -131,6 +132,15 @@ class SQLiteItemRepository(ItemRepository):
             if filters.delivery_available is not None:
                 where_conditions.append("delivery_available = ?")
                 params.append(1 if filters.delivery_available else 0)
+            if filters.garantie_months is not None:
+                if filters.garantie_months == 0:
+                    # Filtre 0 (aucune garantie) retourne aussi les valeurs NULL (non spécifiées)
+                    where_conditions.append("(garantie_months = ? OR garantie_months IS NULL)")
+                    params.append(filters.garantie_months)
+                else:
+                    # Autres filtres: match exact uniquement
+                    where_conditions.append("garantie_months = ?")
+                    params.append(filters.garantie_months)
 
         # Handle cursor pagination
         if pagination and pagination.cursor:
@@ -200,6 +210,15 @@ class SQLiteItemRepository(ItemRepository):
             if options.filters.delivery_available is not None:
                 where_conditions.append("items.delivery_available = ?")
                 params.append(1 if options.filters.delivery_available else 0)
+            if options.filters.garantie_months is not None:
+                if options.filters.garantie_months == 0:
+                    # Filtre 0 (aucune garantie) retourne aussi les valeurs NULL (non spécifiées)
+                    where_conditions.append("(items.garantie_months = ? OR items.garantie_months IS NULL)")
+                    params.append(options.filters.garantie_months)
+                else:
+                    # Autres filtres: match exact uniquement
+                    where_conditions.append("items.garantie_months = ?")
+                    params.append(options.filters.garantie_months)
 
         # Handle cursor pagination
         if options.pagination and options.pagination.cursor:
@@ -259,7 +278,7 @@ class SQLiteItemRepository(ItemRepository):
                     title = ?, description = ?, price_cents = ?, category = ?,
                     condition = ?, status = ?, is_featured = ?, city = ?,
                     postal_code = ?, country = ?, delivery_available = ?,
-                    images = ?, updated_at = ?
+                    garantie_months = ?, images = ?, updated_at = ?
                 WHERE id = ?
                 """,
                 (
@@ -274,6 +293,7 @@ class SQLiteItemRepository(ItemRepository):
                     data.postal_code,
                     data.country,
                     1 if data.delivery_available else 0,
+                    data.garantie_months,
                     images_json,
                     now,
                     id,
@@ -326,6 +346,9 @@ class SQLiteItemRepository(ItemRepository):
         if data.delivery_available is not None:
             updates.append("delivery_available = ?")
             params.append(1 if data.delivery_available else 0)
+        if data.garantie_months is not None:
+            updates.append("garantie_months = ?")
+            params.append(data.garantie_months)
         if data.images is not None:
             updates.append("images = ?")
             params.append(serialize_images_column(data.images))

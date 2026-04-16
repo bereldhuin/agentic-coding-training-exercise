@@ -21,7 +21,8 @@
     "maxPriceLabel": "Max price (€)",
     "postalCodeLabel": "Postal code",
     "postalPlaceholder": "67000",
-    "deliveryAvailableLabel": "Delivery available"
+    "deliveryAvailableLabel": "Delivery available",
+    "garantieLabel": "Warranty"
   },
   "actions": {
     "searchItems": "Search items"
@@ -46,6 +47,12 @@
     "fashion": "fashion",
     "services": "services",
     "other": "other"
+  },
+  "garantieOptions": {
+    "none": "no warranty",
+    "6_months": "6 months",
+    "1_year": "1 year",
+    "2_years": "2 years"
   },
   "conditions": {
     "new": "new",

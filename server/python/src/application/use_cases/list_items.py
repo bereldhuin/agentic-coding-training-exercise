@@ -44,6 +44,8 @@ class ListItemsUseCase:
         if status is not None and status not in Status.values():
             raise ValidationError("Validation failed", {"status": "Invalid status value"})
 
+        garantie_months = self._parse_int(query_params.get("garantie_months"))
+
         filters = FilterOptions(
             status=status,
             category=query_params.get("category"),
@@ -51,6 +53,7 @@ class ListItemsUseCase:
             postal_code=query_params.get("postal_code"),
             is_featured=self._parse_bool(query_params.get("is_featured")),
             delivery_available=self._parse_bool(query_params.get("delivery_available")),
+            garantie_months=garantie_months,
         )
 
         # Parse sort options

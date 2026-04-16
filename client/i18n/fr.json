@@ -21,7 +21,8 @@
     "maxPriceLabel": "Prix max (€)",
     "postalCodeLabel": "Code postal",
     "postalPlaceholder": "67000",
-    "deliveryAvailableLabel": "Livraison disponible"
+    "deliveryAvailableLabel": "Livraison disponible",
+    "garantieLabel": "Garantie"
   },
   "actions": {
     "searchItems": "Rechercher"
@@ -46,6 +47,12 @@
     "fashion": "mode",
     "services": "services",
     "other": "autre"
+  },
+  "garantieOptions": {
+    "none": "aucune garantie",
+    "6_months": "6 mois",
+    "1_year": "1 an",
+    "2_years": "2 ans"
   },
   "conditions": {
     "new": "neuf",

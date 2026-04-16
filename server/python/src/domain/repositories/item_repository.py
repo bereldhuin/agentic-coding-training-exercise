@@ -36,6 +36,7 @@ class FilterOptions:
     postal_code: str | None = None
     is_featured: bool | None = None
     delivery_available: bool | None = None
+    garantie_months: int | None = None
 
 
 @dataclass

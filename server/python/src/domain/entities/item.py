@@ -23,6 +23,7 @@ class Item:
     postal_code: str | None
     country: str
     delivery_available: bool
+    garantie_months: int | None
     created_at: str  # ISO 8601 datetime string
     updated_at: str  # ISO 8601 datetime string
     published_at: str | None
@@ -44,6 +45,7 @@ class CreateItemData:
     postal_code: str | None = None
     country: str = "FR"
     delivery_available: bool = False
+    garantie_months: int | None = None
     images: list[ItemImage] | None = None
 
 
@@ -62,6 +64,7 @@ class UpdateItemData:
     category: str | None = None
     city: str | None = None
     postal_code: str | None = None
+    garantie_months: int | None = None
     images: list[ItemImage] | None = None
 
 
@@ -80,6 +83,7 @@ class PatchItemData:
     postal_code: str | None = None
     country: str | None = None
     delivery_available: bool | None = None
+    garantie_months: int | None = None
     images: list[ItemImage] | None = None
 
 
@@ -106,6 +110,7 @@ def item_from_row(row: dict) -> Item:
         postal_code=row.get("postal_code"),
         country=row["country"],
         delivery_available=bool(row["delivery_available"]),
+        garantie_months=row.get("garantie_months"),
         created_at=row["created_at"],
         updated_at=row["updated_at"],
         published_at=row.get("published_at"),

@@ -21,7 +21,8 @@
     "maxPriceLabel": "Prezzo max (€)",
     "postalCodeLabel": "CAP",
     "postalPlaceholder": "67000",
-    "deliveryAvailableLabel": "Consegna disponibile"
+    "deliveryAvailableLabel": "Consegna disponibile",
+    "garantieLabel": "Garanzia"
   },
   "actions": {
     "searchItems": "Cerca annunci"
@@ -46,6 +47,12 @@
     "fashion": "moda",
     "services": "servizi",
     "other": "altro"
+  },
+  "garantieOptions": {
+    "none": "nessuna garanzia",
+    "6_months": "6 mesi",
+    "1_year": "1 anno",
+    "2_years": "2 anni"
   },
   "conditions": {
     "new": "nuovo",

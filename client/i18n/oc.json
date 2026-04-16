@@ -21,7 +21,8 @@
     "maxPriceLabel": "Prètz max (€)",
     "postalCodeLabel": "Còdi postal",
     "postalPlaceholder": "67000",
-    "deliveryAvailableLabel": "Liurason disponibla"
+    "deliveryAvailableLabel": "Liurason disponibla",
+    "garantieLabel": "Garantida"
   },
   "actions": {
     "searchItems": "Recercar d'anoncis"
@@ -46,6 +47,12 @@
     "fashion": "mòda",
     "services": "servicis",
     "other": "autre"
+  },
+  "garantieOptions": {
+    "none": "cap de garantida",
+    "6_months": "6 meses",
+    "1_year": "1 an",
+    "2_years": "2 ans"
   },
   "conditions": {
     "new": "nòu",

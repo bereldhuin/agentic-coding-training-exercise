@@ -77,6 +77,7 @@
     "noDescription": "Aucune description fournie.",
     "createdLabel": "Cree",
     "updatedLabel": "Mis a jour",
-    "noValue": "-"
+    "noValue": "-",
+    "newCategory": "Nouvelle catégorie"
   }
 }
